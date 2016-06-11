@@ -1,6 +1,6 @@
 <?php
 
-namespace Laralib\L5scaffold\Migrations;
+namespace Robbielove\L5scaffold\Migrations;
 
 /**
  * Class NameParser

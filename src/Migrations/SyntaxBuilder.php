@@ -1,8 +1,8 @@
 <?php
 
-namespace Laralib\L5scaffold\Migrations;
+namespace Robbielove\L5scaffold\Migrations;
 
-use Laralib\L5scaffold\GeneratorException;
+use Robbielove\L5scaffold\GeneratorException;
 
 
 /**
