@@ -1,7 +1,7 @@
 # Laravel 5.2 Scaffold Generator
 
 
-Hi, this is a scaffold generator for Laravel 5.2. (Laravel scaffold for Laravel 5.1? change branch to laravel-5.1 )
+Hi, this is a forked scaffold generator for Laravel 5.2. using Semantic UI styles instead of just Bootstrap (Laravel scaffold for Laravel 5.1? change branch to laravel-5.1 )
 
 
 
@@ -10,7 +10,7 @@ Hi, this is a scaffold generator for Laravel 5.2. (Laravel scaffold for Laravel 
 ### Step 1: Install Through Composer
 
 ```
-composer require 'laralib/l5scaffold' --dev
+composer require 'robbielove/l5scaffold' --dev
 ```
 
 ### Step 2: Add the Service Provider
