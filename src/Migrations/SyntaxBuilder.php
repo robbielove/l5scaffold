@@ -261,8 +261,8 @@ class SyntaxBuilder
         } elseif ($type == 'view-index-header') {
 
             // Fields to index view
-            $syntax = sprintf("<th>%s", strtoupper($field['name']));
-            $syntax .= '</th>';
+            $syntax = sprintf("<div class=\"four wide grey column\">%s", ucfirst($field['name']));
+            $syntax .= '</div>';
 
         } elseif ($type == 'view-index-content') {
 

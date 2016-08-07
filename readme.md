@@ -18,7 +18,7 @@ composer require 'robbielove/l5scaffold' --dev
 Open `config/app.php` and, to your **providers** array at the bottom, add:
 
 ```
-"Laralib\L5scaffold\GeneratorsServiceProvider"
+"Robbielove\L5scaffold\GeneratorsServiceProvider"
 ```
 
 ### Step 3: Run Artisan!
