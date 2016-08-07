@@ -6,13 +6,13 @@
  * Time: 4:58 PM
  */
 
-namespace Laralib\L5scaffold\Makes;
+namespace Robbielove\L5scaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
-use Laralib\L5scaffold\Migrations\SchemaParser;
-use Laralib\L5scaffold\Migrations\SyntaxBuilder;
+use Robbielove\L5scaffold\Commands\ScaffoldMakeCommand;
+use Robbielove\L5scaffold\Migrations\SchemaParser;
+use Robbielove\L5scaffold\Migrations\SyntaxBuilder;
 
 class MakeView
 {

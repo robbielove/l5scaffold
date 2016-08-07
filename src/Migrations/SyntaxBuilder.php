@@ -1,8 +1,8 @@
 <?php
 
-namespace Laralib\L5scaffold\Migrations;
+namespace Robbielove\L5scaffold\Migrations;
 
-use Laralib\L5scaffold\GeneratorException;
+use Robbielove\L5scaffold\GeneratorException;
 
 
 /**
@@ -261,8 +261,8 @@ class SyntaxBuilder
         } elseif ($type == 'view-index-header') {
 
             // Fields to index view
-            $syntax = sprintf("<th>%s", strtoupper($field['name']));
-            $syntax .= '</th>';
+            $syntax = sprintf("<div class=\"four wide grey column\">%s", ucfirst($field['name']));
+            $syntax .= '</div>';
 
         } elseif ($type == 'view-index-content') {
 

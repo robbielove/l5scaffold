@@ -6,11 +6,11 @@
  * Time: 11:49 PM
  */
 
-namespace Laralib\L5scaffold\Makes;
+namespace Robbielove\L5scaffold\Makes;
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laralib\L5scaffold\Commands\ScaffoldMakeCommand;
+use Robbielove\L5scaffold\Commands\ScaffoldMakeCommand;
 
 class MakeLayout {
     use MakerTrait;
