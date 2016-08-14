@@ -1,13 +1,22 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('header')
-    <div class="ui dividing header clearfix">
-        <h1>
-            <i class="tasks icon"></i> {{Class}}
-            <a href="{{ route('{{class}}.create') }}"><button class="ui positive button pull-right"><i class="add circle icon"></i>Create</button></a>
-        </h1>
-
+    <div class="ui header">
+        <h1><i class="big tasks icon"></i>{{Class}}<div class="circular ui blue label"></div></h1>
+        <div class="ui buttons">
+          <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
+          <a class="ui mini button pull-right" href="{{ route('{{prefix}}{{class}}.inactive') }}"><i class="hide icon"></i>View Inactive</a>
+        </div>
     </div>
+    @if(session('message_type'))
+    <div class="ui {{ session('message_type') }} icon message">
+      <i class="{{ session('message_icon') }} icon"></i>
+      <div class="content">
+        <div class="header">{{ session('message_header') }}</div>
+        <p>{{ session('message') }}</p>
+      </div>
+    </div>
+    @endif
 @endsection
 
 @section('content')
@@ -22,8 +31,8 @@
                     {{content_fields}}
                 </div>
                 <div class="ui sixteen wide column vertical segment">
-                    <a href="{{ route('{{class}}.show', ${{classSingle}}->id) }}"><button class="ui mini teal button"><i class="unhide icon"></i>View</button></a>
-                    <a href="{{ route('{{class}}.edit', ${{classSingle}}->id) }}"><button class="ui mini blue button"><i class="edit icon"></i>Edit</button></a>
+                    <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->id) }}"><button class="ui mini teal button"><i class="unhide icon"></i>View</button></a>
+                    <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->id) }}"><button class="ui mini blue button"><i class="edit icon"></i>Edit</button></a>
                     <form action="{{ route('{{class}}.destroy', ${{classSingle}}->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -34,7 +43,7 @@
             </div>
         {!! ${{class}}->render() !!}
             @else
-                <div class="h3 text-center alert alert-info">Empty!</div>
+              <div class="ui center aligned red segment"><h2>No Items Found</h2></div>
             @endif
 
         </div>

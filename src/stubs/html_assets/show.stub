@@ -1,33 +1,79 @@
-@extends('layout')
+@extends('layouts.app')
+
 @section('header')
-<div class="page-header">
-        <h1>{{Class}} / Show #{{${{classSingle}}->id}}</h1>
-        <form action="{{ route('{{prefix}}{{class}}.destroy', ${{classSingle}}->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="btn-group pull-right" role="group" aria-label="...">
-                <a class="btn btn-warning btn-group" role="group" href="{{ route('{{class}}.edit', ${{classSingle}}->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                <button type="submit" class="btn btn-danger">Delete <i class="glyphicon glyphicon-trash"></i></button>
-            </div>
-        </form>
+    <div class="ui header clearfix">
+      <h1><i class="big unhide icon"></i>Projects / View</h1>{{Class}}  {{ route('{{prefix}}{{class}}.destroy', ${{classSingle}}->id) }}  {{${{classSingle}}->id}}
     </div>
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-
-            <form action="#">
-                <div class="form-group">
-                    <label for="nome">ID</label>
-                    <p class="form-control-static"></p>
-                </div>
-                {{content_fields}}
-            </form>
-
-            <a class="btn btn-link" href="{{ route('{{prefix}}{{class}}.index') }}"><i class="glyphicon glyphicon-backward"></i>  Back</a>
-
+    <div class="ui two column very padded stackable grid">
+        <div class="four wide column">
+          <h4><i class="ordered list icon"></i>{{classSingle}} Name</h4>
         </div>
+        <div class="twelve wide column">
+          <h4>{{${{classSingle}}->name}}</h4>
+        </div>
+        <div class="four wide column">
+          <h4><i class="tag icon"></i>ID</h4>
+        </div>
+        <div class="twelve wide column">
+          <h5><div class="ui blue tag label">{{${{classSingle}}->id}}</div></h5>
+        </div>
+        <div class="four wide column">
+          <h4><i class="align left icon"></i>Description</h4>
+        </div>
+        <div class="twelve wide column">
+          <p>{{${{classSingle}}->description}}</p>
+        </div>
+        <div class="four wide column">
+          <h4><i class="checkered flag icon"></i>Complete?</h4>
+        </div>
+        <div class="twelve wide column">
+           <div class="ui read-only checkbox">
+             @if(${{classSingle}}->completed == 1)
+             <input type="checkbox" name="completed" checked="">
+             <label for="completed"></label>
+             @else
+             <input type="checkbox" name="completed">
+             <label for="completed"></label>
+             @endif
+           </div>
+           @if(${{classSingle}}->completed == 1)
+           <div class="ui green label"><i class="flag icon"></i>Yes</div>
+           @else
+           <div class="ui red label"><i class="flag outline icon"></i>No</div>
+           @endif
+        </div>
+        <div class="four wide column">
+          <h4><i class="linkify icon"></i>Slug</h4>
+        </div>
+        <div class="twelve wide column">
+          <h4><a href="{{ ${{classSingle}}->slug }}" target="_blank">{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug, ${{classSingle}}->slug]) }}</a></h4>
+        </div>
+        <div class="four wide column">
+          <h4><i class="wait icon"></i>Created</h4>
+        </div>
+        <div class="twelve wide column">
+          <h5>{{ date('j F Y g:i a', strtotime(${{classSingle}}->created_at)) }}</h5>
+        </div>
+        <div class="four wide column">
+          <h4><i class="history icon"></i>Updated</h4>
+        </div>
+        <div class="twelve wide column">
+          <h5>{{ date('j F Y g:i a', strtotime(${{classSingle}}->updated_at)) }}</h5>
+        </div>
+        {{content_fields}}
     </div>
-
+    <div class="ui black segment">
+      <form class="right" action="{{ route('{{prefix}}{{class}}.destroy', [${{classSingle}}->slug, ${{classSingle}}->slug]) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="ui mini buttons">
+            <a class="ui teal button" href="{{ route('{{prefix}}{{class}}.edit', [${{classSingle}}->slug, ${{classSingle}}->slug]) }}"><i class="edit icon"></i>Edit</a>
+            <button type="submit" class="ui basic negative button"><i class="remove circle icon"></i>Delete</button>
+        </div>
+      </form>
+      <a class="ui mini blue button" href="{{ route('{{prefix}}{{class}}.index') }}"><i class="undo icon"></i>Back to {{ ${{classSingle}}->name }}</a>
+    </div>
 @endsection
