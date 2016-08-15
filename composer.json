@@ -1,6 +1,6 @@
 {
-  "name": "Robbielove/l5scaffold",
-  "description": "Extend Laravel 5's generators scaffold.",
+  "name": "robbielove/l5scaffold",
+  "description": "Extend Laravel 5's generators using Semantic UI scaffolding.",
   "keywords": ["laravel", "generators", "scaffold" , "laravel5"],
   "license": "MIT",
   "minimum-stability": "dev",
