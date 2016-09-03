@@ -32,7 +32,7 @@ class ScaffoldMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a scaffold with bootstrap 3';
+    protected $description = 'Create a scaffold with Semantic UI';
 
 
     /**
@@ -139,7 +139,7 @@ class ScaffoldMakeCommand extends Command
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
+            ['name', InputArgument::REQUIRED, 'The name of the model. (Eg, Post)'],
         ];
     }
 
