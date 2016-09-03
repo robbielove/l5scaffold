@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Robbielove\\L5scaffold\\": "src/"
+      "robbielove\\l5scaffold\\": "src/"
     }
   }
 }
