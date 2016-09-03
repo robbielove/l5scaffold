@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="big tasks icon"></i>{{Class}}<div class="circular ui blue label"></div></h1>
+        <h1><i class="big tasks icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
         <div class="ui buttons">
           <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
           <a class="ui mini button pull-right" href="{{ route('{{prefix}}{{class}}.inactive') }}"><i class="hide icon"></i>View Inactive</a>
@@ -33,7 +33,7 @@
                 <div class="ui sixteen wide column vertical segment">
                     <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->id) }}"><button class="ui mini teal button"><i class="unhide icon"></i>View</button></a>
                     <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->id) }}"><button class="ui mini blue button"><i class="edit icon"></i>Edit</button></a>
-                    <form action="{{ route('{{class}}.destroy', ${{classSingle}}->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
+                    <form action="{{ route('{{class}}.destroy', ${{classSingle}}->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <button type="submit" class="ui mini negative button"><i class="erase icon"></i>Delete</button>
@@ -41,9 +41,11 @@
                 </div>
                 @endforeach
             </div>
-        {!! ${{class}}->render() !!}
+          </div>
+          <div class="ui padded center aligned vertical stripe segment">
+          {!! (new Landish\Pagination\SemanticUI(${{class}}))->render() !!}
             @else
-              <div class="ui center aligned red segment"><h2>No Items Found</h2></div>
+              <div class="ui center aligned red segment"><h2>No {{Class}} Found</h2></div>
             @endif
 
         </div>

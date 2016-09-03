@@ -3,8 +3,12 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
+use Auth;
+
 use {{model_path}};
 use Illuminate\Http\Request;
+use \Session;
 
 class {{class}} extends Controller {
 
@@ -16,8 +20,8 @@ class {{class}} extends Controller {
 	public function index()
 	{
 		${{model_name_var}} = {{model_name_class}}::orderBy('id', 'desc')->paginate(10);
-
-		return view('{{model_name_var}}.index', compact('{{model_name_var}}'));
+		$active = {{model_name_class}}::where('active_flag', 1);
+		return view('{{model_name_var}}.index', compact('{{model_name_var}}', 'active'));
 	}
 
 	/**
@@ -44,7 +48,12 @@ class {{class}} extends Controller {
 
 		${{model_name_var_sgl}}->save();
 
-		return redirect()->route('{{prefix}}{{model_name_var}}.index')->with('message', 'Item created successfully.');
+		Session::flash('message_type', 'success');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{model_name_class}} "' . ${{model_name_var_sgl}}->name . '" was Created.');
+
+		return redirect()->route('{{prefix}}{{model_name_var}}.index');
 	}
 
 	/**
@@ -60,6 +69,19 @@ class {{class}} extends Controller {
 		return view('{{model_name_var}}.show', compact('{{model_name_var_sgl}}'));
 	}
 
+	/**
+	 * Display the public version of the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+
+	public function public({{model_name_class}} {{model_name_var_sgl}})
+	{
+		//${{model_name_var_sgl}} = {{model_name_class}}::findOrFail({{model_name_var_sgl}});
+
+		return view('{{model_name_var}}.public', compact('{{model_name_var_sgl}}'));
+	}
+*/
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -88,21 +110,31 @@ class {{class}} extends Controller {
 
 		${{model_name_var_sgl}}->save();
 
-		return redirect()->route('{{prefix}}{{model_name_var}}.index')->with('message', 'Item updated successfully.');
+		Session::flash('message_type', 'blue');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{model_name_class}} "' . ${{model_name_var_sgl}}->name . '" was Updated.');
+
+		return redirect()->route('{{prefix}}{{model_name_var}}.index');
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * De-Activate the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function destroy($id)
 	{
-		${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
-		${{model_name_var_sgl}}->delete();
+		${{model_name_var_sgl}}->active_flag = 0;
+		${{model_name_var_sgl}}->save();
 
-		return redirect()->route('{{prefix}}{{model_name_var}}.index')->with('message', 'Item deleted successfully.');
+		Session::flash('message_type', 'negative');
+		Session::flash('message_icon', 'hide');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{model_name_class}} "' . ${{model_name_var_sgl}}->name . '" was De-Activated.');
+
+		return redirect()->route('{{prefix}}{{model_name_var}}.index');
 	}
 
 }
