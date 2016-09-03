@@ -1,6 +1,6 @@
 # Laravel 5.2 Scaffold Generator
 
-Hi, this is a forked scaffold generator for Laravel 5.2. using Semantic UI styles instead of just Bootstrap (Laravel scaffold for Laravel 5.1? change branch to laravel-5.1 )
+Hi, this is a forked scaffold generator for Laravel 5.2. using Semantic UI styles instead of Bootstrap
 
 ## Usage
 
@@ -8,7 +8,9 @@ Hi, this is a forked scaffold generator for Laravel 5.2. using Semantic UI style
 
 ```
 composer require 'robbielove/l5scaffold' --dev
-
+```
+install landish/pagination in your project - this project uses it for pagination Controllers
+```
 composer require landish/pagination
 ```
 
