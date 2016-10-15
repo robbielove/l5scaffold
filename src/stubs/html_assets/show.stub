@@ -50,7 +50,7 @@
     <div class="ui basic segment">
       <div class="ui three column stackable grid">
         <div class="column">
-          <a class="ui fluid teal button" href="{{ route('{{prefix}}{{class}}.edit']) }}"><i class="edit icon"></i>Edit</a>
+          <a class="ui fluid teal button" href="{{ route('{{prefix}}{{class}}.edit', [${{classSingle}}->slug]) }}"><i class="edit icon"></i>Edit</a>
         </div>
         <div class="column">
           <form class="right" action="{{ route('{{prefix}}{{class}}.destroy', [${{classSingle}}->slug]) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
