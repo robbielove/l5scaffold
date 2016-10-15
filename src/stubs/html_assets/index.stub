@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="big tasks icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
+        <h1><i class="big {{class}} icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
         <div class="ui buttons">
           <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
         </div>
@@ -23,27 +23,27 @@
         @if(${{class}}->count())
             <div class="ui very padded grid center aligned">
                 <div class="row">
-                  <div class="four wide black column"><i class="{{$class}} icon"></i>Title</div>
+                  <div class="four wide black column"><i class="{{class}} icon"></i>Name</div>
                   <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
-                  <div class="four wide black column"><i class="left align icon"></i>Content</div>
+                  <div class="four wide black column"><i class="left align icon"></i>Description</div>
                   <div class="four wide black column"><i class="user icon"></i>Author</div>
                   {{header_fields}}
                 </div>
                 @foreach(${{class}} as ${{classSingle}})
                 <div class="row">
-                  <div class="four wide column"><a href="{{ route('posts.show', [$post->slug]) }}"><h4>{{$post->title}}</h4></a></div>
-                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('posts.show', [$post->slug]) }}"><i class="linkify icon"></i>{{ route('posts.show', [$post->slug]) }}</a></div>
-                  <div class="four wide column">{!! str_limit(strip_tags($post->content), 200) !!}</div>
-                  <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [$post->Author->slug]) }}"><i class="user icon"></i>{{$post->Author->name}}</a></div>
+                  <div class="four wide column"><a href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><h4>{{${{classSingle}}->name}}</h4></a></div>
+                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><i class="linkify icon"></i>{{ route('posts.show', [${{classSingle}}->slug]) }}</a></div>
+                  <div class="four wide column">{!! str_limit(strip_tags(${{classSingle}}->description), 200) !!}</div>
+                  <div class="four wide column"><a class="ui mini label" href="{{ route('{{prefix}}{{class}}.public', [${{classSingle}}->Author->slug]) }}"><i class="user icon"></i>{{${{classSingle}}->Author->name}}</a></div>
                   {{content_fields}}
                 </div>
                 <div class="ui sixteen wide column vertical segment">
-                    <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->id) }}"><button class="ui mini teal button"><i class="unhide icon"></i>View</button></a>
-                    <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->id) }}"><button class="ui mini blue button"><i class="edit icon"></i>Edit</button></a>
-                    <form action="{{ route('{{class}}.destroy', ${{classSingle}}->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
+                    <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
+                    <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->slug) }}"><button class="ui mini teal button"><i class="edit icon"></i>Edit</button></a>
+                    <form action="{{ route('{{class}}.destroy', ${{classSingle}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="ui mini negative button"><i class="erase icon"></i>Delete</button>
+                        <button type="submit" class="ui mini button"><i class="hide icon"></i>De-Activate</button>
                     </form>
                 </div>
                 @endforeach

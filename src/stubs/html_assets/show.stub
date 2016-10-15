@@ -24,7 +24,7 @@
           <h4><i class="linkify icon"></i>Slug</h4>
         </div>
         <div class="twelve wide column">
-          <h4><a href="{{ ${{classSingle}}->slug }}" target="_blank">{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug, ${{classSingle}}->slug]) }}</a></h4>
+          <h4><a href="{{ ${{classSingle}}->slug }}" target="_blank">{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}</a></h4>
         </div>
         <div class="four wide column">
           <h4><i class="wait icon"></i>Created</h4>
@@ -50,13 +50,13 @@
     <div class="ui basic segment">
       <div class="ui three column stackable grid">
         <div class="column">
-          <a class="ui fluid teal button" href="{{ route('{{prefix}}{{class}}.edit', [${{classSingle}}->slug]) }}"><i class="edit icon"></i>Edit</a>
+          <a class="ui fluid teal button" href="{{ route('{{prefix}}{{class}}.edit']) }}"><i class="edit icon"></i>Edit</a>
         </div>
         <div class="column">
-          <form class="right" action="{{ route('{{prefix}}{{class}}.destroy', [${{classSingle}}->slug, ${{classSingle}}->slug]) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
+          <form class="right" action="{{ route('{{prefix}}{{class}}.destroy', [${{classSingle}}->slug]) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <button type="submit" class="ui fluid basic negative button"><i class="remove circle icon"></i>Delete</button>
+            <button type="submit" class="ui fluid button"><i class="hide icon"></i>De-Activate</button>
           </form>
         </div>
         <div class="column">
