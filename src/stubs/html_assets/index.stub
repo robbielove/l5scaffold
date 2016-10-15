@@ -5,7 +5,6 @@
         <h1><i class="big tasks icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
         <div class="ui buttons">
           <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
-          <a class="ui mini button pull-right" href="{{ route('{{prefix}}{{class}}.inactive') }}"><i class="hide icon"></i>View Inactive</a>
         </div>
     </div>
     @if(session('message_type'))
@@ -24,11 +23,19 @@
         @if(${{class}}->count())
             <div class="ui very padded grid center aligned">
                 <div class="row">
+                  <div class="four wide black column"><i class="{{$class}} icon"></i>Title</div>
+                  <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
+                  <div class="four wide black column"><i class="left align icon"></i>Content</div>
+                  <div class="four wide black column"><i class="user icon"></i>Author</div>
                   {{header_fields}}
                 </div>
                 @foreach(${{class}} as ${{classSingle}})
                 <div class="row">
-                    {{content_fields}}
+                  <div class="four wide column"><a href="{{ route('posts.show', [$post->slug]) }}"><h4>{{$post->title}}</h4></a></div>
+                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('posts.show', [$post->slug]) }}"><i class="linkify icon"></i>{{ route('posts.show', [$post->slug]) }}</a></div>
+                  <div class="four wide column">{!! str_limit(strip_tags($post->content), 200) !!}</div>
+                  <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [$post->Author->slug]) }}"><i class="user icon"></i>{{$post->Author->name}}</a></div>
+                  {{content_fields}}
                 </div>
                 <div class="ui sixteen wide column vertical segment">
                     <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->id) }}"><button class="ui mini teal button"><i class="unhide icon"></i>View</button></a>
@@ -45,7 +52,12 @@
           <div class="ui padded center aligned vertical stripe segment">
           {!! (new Landish\Pagination\SemanticUI(${{class}}))->render() !!}
             @else
-              <div class="ui center aligned red segment"><h2>No {{Class}} Found</h2></div>
+              <div class="ui icon error message"><i class="remove icon"></i>
+                <div class="content">
+                  <div class="header">No Active {{Class}} Found!</div>
+                  <p>Create one to get started...</p>
+                </div>
+              </div>
             @endif
 
         </div>

@@ -188,7 +188,7 @@ class ScaffoldMakeCommand extends Command
         $this->info('Dump-autoload...');
         $this->composer->dumpAutoloads();
 
-        $this->info('Route::resource("'.$this->getObjName("names").'","'.$this->getObjName("Name").'Controller"); // Add this line in routes.php');
+        $this->info('Route::bind("'.$this->getObjName("names").'", function($value, $route) { return App\"'.$this->getObjName("Name").'"::whereSlug($value)->firstOrFail(); }); Route::resource("'.$this->getObjName("names").'","'.$this->getObjName("Name").'Controller"); // Add this line in routes.php');
 
     }
 

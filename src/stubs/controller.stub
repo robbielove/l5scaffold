@@ -44,6 +44,17 @@ class {{class}} extends Controller {
 	{
 		${{model_name_var_sgl}} = new {{model_name_class}}();
 
+		${{model_name_var_sgl}}->name = $request->input("name");
+		${{model_name_var_sgl}}->slug = str_slug($request->input("name"), "-");
+		${{model_name_var_sgl}}->description = $request->input("description");
+		${{model_name_var_sgl}}->active_flag = 1;
+		${{model_name_var_sgl}}->author_id = $request->user()->id;
+
+		$this->validate($request, [
+					 'name' => 'required|max:255',
+					 'description' => 'required'
+			 ]);
+
 		{{model_fields}}
 
 		${{model_name_var_sgl}}->save();
@@ -62,9 +73,9 @@ class {{class}} extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show({{model_name_class}} ${{model_name_var_sgl}})
 	{
-		${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
+		//${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
 
 		return view('{{model_name_var}}.show', compact('{{model_name_var_sgl}}'));
 	}
@@ -88,9 +99,9 @@ class {{class}} extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit({{model_name_class}} ${{model_name_var_sgl}})
 	{
-		${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
+		//${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
 
 		return view('{{model_name_var}}.edit', compact('{{model_name_var_sgl}}'));
 	}
@@ -102,10 +113,21 @@ class {{class}} extends Controller {
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, {{model_name_class}} ${{model_name_var_sgl}})
 	{
-		${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
+		//${{model_name_var_sgl}} = {{model_name_class}}::findOrFail($id);
 
+		${{model_name_var_sgl}}->name = $request->input("name");
+		${{model_name_var_sgl}}->slug = str_slug($request->input("name"), "-");
+		${{model_name_var_sgl}}->description = $request->input("description");
+		${{model_name_var_sgl}}->active_flag = 1;
+		${{model_name_var_sgl}}->author_id = $request->user()->id;
+
+		$this->validate($request, [
+					 'name' => 'required|max:255',
+					 'description' => 'required'
+			 ]);
+			 
 		{{model_fields}}
 
 		${{model_name_var_sgl}}->save();
@@ -124,7 +146,7 @@ class {{class}} extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy({{model_name_class}} ${{model_name_var_sgl}})
 	{
 		${{model_name_var_sgl}}->active_flag = 0;
 		${{model_name_var_sgl}}->save();
