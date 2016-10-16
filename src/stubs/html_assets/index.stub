@@ -32,7 +32,7 @@
                 @foreach(${{class}} as ${{classSingle}})
                 <div class="row">
                   <div class="four wide column"><a href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><h4>{{${{classSingle}}->name}}</h4></a></div>
-                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><i class="linkify icon"></i>{{ route('posts.show', [${{classSingle}}->slug]) }}</a></div>
+                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}</a></div>
                   <div class="four wide column">{!! str_limit(strip_tags(${{classSingle}}->description), 200) !!}</div>
                   <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [${{classSingle}}->Author->slug]) }}"><i class="user icon"></i>{{${{classSingle}}->Author->name}}</a></div>
                   {{content_fields}}
