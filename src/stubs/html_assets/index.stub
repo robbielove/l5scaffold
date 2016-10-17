@@ -21,7 +21,7 @@
 @section('content')
 
         @if(${{class}}->count())
-            <div class="ui very padded grid center aligned">
+            <div class="ui very padded stackable grid center aligned">
                 <div class="row">
                   <div class="four wide black column"><i class="{{class}} icon"></i>Name</div>
                   <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
