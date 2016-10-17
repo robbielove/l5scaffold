@@ -273,10 +273,10 @@ class SyntaxBuilder
         } elseif ($type == 'view-show-content') {
 
             // Fields to show view
-            $syntax = sprintf("<div class=\"form-group\">\n" .
-                str_repeat(' ', 21) . "<label for=\"%s\">%s</label>\n" .
-                str_repeat(' ', 21) . "<p class=\"form-control-static\">{{\$%s->%s}}</p>\n" .
-                str_repeat(' ', 16) . "</div>", strtolower($field['name']), strtoupper($field['name']), $meta['var_name'], strtolower($field['name']));
+            $syntax = sprintf("<div class=\"four wide column\">\n" .
+          str_repeat(' ', 21) . "<label for=\"%s\">%s</label>\n" .
+          str_repeat(' ', 21) . "<p>{{\$%s->%s}}</p>\n" .
+        str_repeat(' ', 16) . "</div>", strtolower($field['name']), strtoupper($field['name']), $meta['var_name'], strtolower($field['name']));
 
 
         } elseif ($type == 'view-edit-content') {
@@ -324,17 +324,17 @@ class SyntaxBuilder
                 break;
         }
 
-        $syntax[] = '<div class="form-group @if($errors->has('."'". $column . "'".')) has-error @endif">';
+        $syntax[] = '<div class="ui input @if($errors->has('."'". $column . "'".')) error @endif">';
         $syntax[] = '   <label for="' . $column . '-field">' . $title . '</label>';
 
         if($this->illuminate) {
-            $syntax[] = '   {!! Form::' . $input . '("' . $column . '", ' . $value . ', array("class" => "form-control", "id" => "' . $column . '-field")) !!}';
+            $syntax[] = '   {!! Form::' . $input . '("' . $column . '", ' . $value . ', array("class" => "ui input", "id" => "' . $column . '-field")) !!}';
         } else {
             $syntax[] = $this->htmlField($column, $variable, $field, $type);
         }
 
         $syntax[] = '   @if($errors->has("' . $column . '"))';
-        $syntax[] = '    <span class="help-block">{{ $errors->first("' . $column . '") }}</span>';
+        $syntax[] = '    <span class="ui pointing red basic label">{{ $errors->first("' . $column . '") }}</span>';
         $syntax[] = '   @endif';
         $syntax[] = '</div>';
 
@@ -418,16 +418,16 @@ class SyntaxBuilder
         switch ($field['type']) {
             case 'string':
             default:
-                $layout = "<input type=\"text\" id=\"$column-field\" name=\"$column\" class=\"form-control\" value=\"$value\"/>";
+                $layout = "<input type=\"text\" id=\"$column-field\" name=\"$column\" class=\"ui input\" placeholder="$column" value=\"$value\"/>";
                 break;
             case 'date':
-                $layout = "<input type=\"text\" id=\"$column-field\" name=\"$column\" class=\"form-control date-picker\" value=\"$value\"/>";
+                $layout = "<input type=\"text\" id=\"$column-event\" name=\"$column\" class=\"ui input\" readonly=\"true\" value=\"$value\"/>";
                 break;
             case 'boolean':
-                $layout = "<div class=\"btn-group\" data-toggle=\"buttons\"><label class=\"btn btn-primary\"><input type=\"radio\" value=\"true\" name=\"$column-field\" id=\"$column-field\" autocomplete=\"off\"> True</label><label class=\"btn btn-primary active\"><input type=\"radio\" name=\"$column-field\" value=\"false\" id=\"$column-field\" autocomplete=\"off\"> False</label></div>";
+                $layout = "<div class=\"ui row\"><label class=\"ui label\"><input type=\"radio\" value=\"true\" name=\"$column-field\" id=\"$column-field\" autocomplete=\"off\"> True</label><label class=\"ui label\"><input type=\"radio\" name=\"$column-field\" value=\"false\" id=\"$column-field\" autocomplete=\"off\"> False</label></div>";
                 break;
             case 'text':
-                $layout = "<textarea class=\"form-control\" id=\"$column-field\" rows=\"3\" name=\"$column\">$value</textarea>";
+                $layout = "<textarea class=\"ui input\" id=\"$column-field\" rows=\"3\" name=\"$column\">$value</textarea>";
                 break;
         }
 
