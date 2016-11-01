@@ -5,11 +5,13 @@ namespace Robbielove\L5scaffold\Commands;
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Composer;
+use Illuminate\Support\Facades\Input;
 use Robbielove\L5scaffold\Makes\MakeController;
 use Robbielove\L5scaffold\Makes\MakeLayout;
+use Robbielove\L5scaffold\Makes\MakeLocalization;
 use Robbielove\L5scaffold\Makes\MakeMigration;
 use Robbielove\L5scaffold\Makes\MakeModel;
+use Robbielove\L5scaffold\Makes\MakeRoute;
 use Robbielove\L5scaffold\Makes\MakerTrait;
 use Robbielove\L5scaffold\Makes\MakeSeed;
 use Robbielove\L5scaffold\Makes\MakeView;
@@ -75,7 +77,7 @@ class ScaffoldMakeCommand extends Command
      * @return void
      */
     public function fire()
-    {        
+    {
         $header = "scaffolding: {$this->getObjName("Name")}";
         $footer = str_pad('', strlen($header), '-');
         $dump = str_pad('>DUMP AUTOLOAD<', strlen($header), ' ', STR_PAD_BOTH);
@@ -103,7 +105,7 @@ class ScaffoldMakeCommand extends Command
      *
      * @return void
      */
-    protected function makeMeta()    
+    protected function makeMeta()
     {
         // ToDo - Verificar utilidade...
         $this->meta['action'] = 'create';
@@ -111,15 +113,15 @@ class ScaffoldMakeCommand extends Command
         $this->meta['table'] = $this->getObjName("names");//obsoleto
 
         $this->meta['ui'] = $this->option('ui');
-        
+
         $this->meta['namespace'] = $this->getAppNamespace();
-        
+
         $this->meta['Model'] = $this->getObjName('Name');
         $this->meta['Models'] = $this->getObjName('Names');
         $this->meta['model'] = $this->getObjName('name');
         $this->meta['models'] = $this->getObjName('names');
         $this->meta['ModelMigration'] = "Create{$this->meta['Models']}Table";
-        
+
         $this->meta['schema'] = $this->option('schema');
         $this->meta['prefix'] = ($prefix = $this->option('prefix')) ? "$prefix." : "";
     }
@@ -143,7 +145,7 @@ class ScaffoldMakeCommand extends Command
     {
         new MakeController($this, $this->files);
     }
-    
+
     /**
      * Make a layout.blade.php with bootstrap
      *
@@ -200,7 +202,7 @@ class ScaffoldMakeCommand extends Command
      */
     protected function getArguments()
     {
-        return 
+        return
         [
             ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
         ];
@@ -213,13 +215,13 @@ class ScaffoldMakeCommand extends Command
      */
     protected function getOptions()
     {
-        return 
+        return
         [
             [
-                'schema', 
-                's', 
-                InputOption::VALUE_REQUIRED, 
-                'Schema to generate scaffold files. (Ex: --schema="title:string")', 
+                'schema',
+                's',
+                InputOption::VALUE_REQUIRED,
+                'Schema to generate scaffold files. (Ex: --schema="title:string")',
                 null
             ],
             [
@@ -251,17 +253,17 @@ class ScaffoldMakeCommand extends Command
                 null,
             ],
             [
-                'form', 
-                'f', 
-                InputOption::VALUE_OPTIONAL, 
-                'Use Illumintate/Html Form facade to generate input fields', 
+                'form',
+                'f',
+                InputOption::VALUE_OPTIONAL,
+                'Use Illumintate/Html Form facade to generate input fields',
                 false
             ],
             [
-                'prefix', 
-                'p', 
-                InputOption::VALUE_OPTIONAL, 
-                'Generate schema with prefix', 
+                'prefix',
+                'p',
+                InputOption::VALUE_OPTIONAL,
+                'Generate schema with prefix',
                 false
             ]
         ];
@@ -299,7 +301,7 @@ class ScaffoldMakeCommand extends Command
         $names['name'] = str_singular(strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $args_name)));
 
 
-        if (!isset($names[$config])) 
+        if (!isset($names[$config]))
         {
             throw new \Exception("Position name is not found");
         };
