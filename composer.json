@@ -1,7 +1,7 @@
 {
   "name": "robbielove/l5scaffold",
   "description": "Extend Laravel 5's generators using Semantic UI scaffolding.",
-  "keywords": ["laravel", "generators", "scaffold" , "laravel5"],
+  "keywords": ["laravel", "generators", "scaffold" , "laravel5", "semantic ui"],
   "license": "MIT",
   "minimum-stability": "dev",
   "authors": [
@@ -12,7 +12,8 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "illuminate/support": "~5.0"
+    "illuminate/support": "~5.0",
+    "Robbielove\\L5scaffold\\": "dev-current"
   },
   "autoload": {
     "psr-4": {
