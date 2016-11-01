@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('layouts.app')
 
 @section('header')
     <div class="ui header">
@@ -10,10 +10,17 @@
     @include('error')
 <form action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    {{form_fields_empty}}
-    <div class="ui divided segment">
-        <button type="submit" class="ui positive button"><i class="save icon"></i> Create</button>
-        <a class="ui blue button" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="undo icon"></i> Back</a>
+    <div class="ui two column very padded stackable grid">
+      {{form_fields_empty}}
+    </div>
+    <div class="ui divider"></div>
+    <div class="ui two column stackable grid">
+      <div class="column">
+        <button type="submit" class="ui fluid button positive"><i class="circle plus icon"></i> Create</button>
+      </div>
+      <div class="column">
+        <a class="ui fluid blue button" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="undo icon"></i>Back to all</a>
+      </div>
     </div>
 </form>
 @endsection
