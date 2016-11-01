@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="ui input">
 	<label for="{{field.name}}-field">{{field.Name}}</label>
-	<input class="form-control" type="text" name="{{field.name}}" id="{{field.name}}-field" value="{{field.value.default}}" />
+	<input class="ui input" type="text" name="{{field.name}}" id="{{field.name}}-field" value="{{field.value.default}}" />
 </div>

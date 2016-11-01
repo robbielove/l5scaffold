@@ -1,28 +1,19 @@
-@extends('layout')
+@extends('layouts')
 
 @section('header')
-    <div class="page-header">
-        <h1><i class="glyphicon glyphicon-plus"></i> {{Model}} / Create </h1>
+    <div class="ui header">
+        <h1><i class="plus circle icon"></i> {{Model}} / Create </h1>
     </div>
 @endsection
 
 @section('content')
     @include('error')
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <form action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                {{form_fields_empty}}
-
-                <div class="well well-sm">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                    <a class="btn btn-link pull-right" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
-                </div>
-            </form>
-
-        </div>
+<form action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    {{form_fields_empty}}
+    <div class="ui divided segment">
+        <button type="submit" class="ui positive button"><i class="save icon"></i> Create</button>
+        <a class="ui blue button" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="undo icon"></i> Back</a>
     </div>
+</form>
 @endsection

@@ -1,31 +1,24 @@
-@extends('layout')
+@extends('layouts')
 @section('header')
-    <div class="page-header">
-        <h1>{{Model}} / Show #{{${{model}}->id}}</h1>
+    <div class="ui header">
+        <h1>{{Model}} / Show {{${{model}}->name}}</h1>
     </div>
 @endsection
 
 @section('content')
-    <div class="well well-sm">
-        <div class="row">
-            <div class="col-md-6">
-                <a class="btn btn-link" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
-            </div>
-            <div class="col-md-6">
-                 <a class="btn btn-sm btn-warning pull-right" href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->id) }}">
-                    <i class="glyphicon glyphicon-edit"></i> Edit
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-12">
-
-            {{form_fields_show}}
-
-        </div>
-
-    </div>
+  <div class="row">
+      <div class="ui sixteen wide columns">
+          {{form_fields_show}}
+      </div>
+  </div>
+</div>
+<div class="ui dividing segment">
+  <div class="row">
+      <div class="ui eight wide columns">
+          <a class="ui blue button" href="{{ route('{{prefix}}{{models}}.index') }}"><i class="undo icon"></i> Back</a>
+      </div>
+      <div class="eight wide columns>
+          <a class="ui teal button" href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->id) }}"><i class="edit icon"></i> Edit</a>
+      </div>
+  </div>
 @endsection
