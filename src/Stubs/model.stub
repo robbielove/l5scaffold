@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class {{Model}} extends Model
 {
     protected $fillable = [{{fillable}}];
+
+    public function Author(){
+      return $this->belongsTo('App\User','author_id');
+        }
 }
