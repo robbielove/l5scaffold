@@ -12,8 +12,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "illuminate/support": "~5.0",
-    "Robbielove\\L5scaffold\\": "dev-current"
+    "illuminate/support": "~5.0"
   },
   "require-dev": {
     "laravel/laravel": "dev-master",

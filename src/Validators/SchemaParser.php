@@ -1,10 +1,10 @@
 <?php
 
-namespace Laralib\L5scaffold\Validators;
+namespace Robbielove\L5scaffold\Validators;
 
 /**
  * Class SchemaParser
- * @package Laralib\L5scaffold\Migrations
+ * @package Robbielove\L5scaffold\Migrations
  * @author Ryan Gurnick <ryangurnick@gmail.com>
  */
 class SchemaParser
