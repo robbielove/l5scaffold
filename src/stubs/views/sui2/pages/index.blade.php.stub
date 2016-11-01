@@ -2,9 +2,9 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="big {{class}} icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
+        <h1><i class="big {{models}} icon"></i>{{Model}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
         <div class="ui buttons">
-          <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
+          <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{models}}.create') }}"><i class="add circle icon"></i>Create</a>
         </div>
     </div>
     @if(session('message_type'))
@@ -19,27 +19,27 @@
 @endsection
 
 @section('content')
-@if(${{class}}->count())
+@if(${{models}}->count())
     <div class="ui very padded stackable grid center aligned">
         <div class="row">
-          <div class="four wide black column"><i class="{{class}} icon"></i>Name</div>
+          <div class="four wide black column"><i class="{{models}} icon"></i>Name</div>
           <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
           <div class="four wide black column"><i class="left align icon"></i>Description</div>
           <div class="four wide black column"><i class="user icon"></i>Author</div>
           {{header_fields}}
         </div>
-        @foreach(${{class}} as ${{classSingle}})
+        @foreach(${{models}} as ${{model}})
         <div class="row">
-          <div class="four wide column"><a href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><h4>{{${{classSingle}}->name}}</h4></a></div>
-          <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}</a></div>
-          <div class="four wide column">{!! str_limit(strip_tags(${{classSingle}}->description), 200) !!}</div>
-          <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [${{classSingle}}->Author->slug]) }}"><i class="user icon"></i>{{${{classSingle}}->Author->name}}</a></div>
+          <div class="four wide column"><a href="{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}"><h4>{{${{model}}->name}}</h4></a></div>
+          <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}</a></div>
+          <div class="four wide column">{!! str_limit(strip_tags(${{model}}->description), 200) !!}</div>
+          <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [${{model}}->Author->slug]) }}"><i class="user icon"></i>{{${{model}}->Author->name}}</a></div>
           {{content_fields}}
         </div>
         <div class="ui sixteen wide column vertical segment">
-            <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
-            <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->slug) }}"><button class="ui mini teal button"><i class="edit icon"></i>Edit</button></a>
-            <form action="{{ route('{{class}}.destroy', ${{classSingle}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
+            <a href="{{ route('{{prefix}}{{models}}.show', ${{model}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
+            <a href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->slug) }}"><button class="ui mini teal button"><i class="edit icon"></i>Edit</button></a>
+            <form action="{{ route('{{models}}.destroy', ${{model}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="ui mini button"><i class="hide icon"></i>De-Activate</button>
@@ -49,11 +49,11 @@
     </div>
   </div>
   <div class="ui padded center aligned vertical stripe segment">
-  {!! (new Landish\Pagination\SemanticUI(${{class}}))->render() !!}
+  {!! (new Landish\Pagination\SemanticUI(${{models}}))->render() !!}
 @else
   <div class="ui icon error message"><i class="remove icon"></i>
     <div class="content">
-      <div class="header">No Active {{Class}} Found!</div>
+      <div class="header">No Active {{Model}} Found!</div>
       <p>Create one to get started...</p>
     </div>
   </div>
