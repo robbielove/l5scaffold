@@ -4,7 +4,7 @@ namespace Robbielove\L5scaffold\Migrations;
 
 /**
  * Class NameParser
- * @package Laralib\L5scaffold\Migrations with modifications by Fernando
+ * @package Robbielove\L5scaffold\Migrations with modifications by Fernando
  * @author Jeffrey Way <jeffrey@jeffrey-way.com>
  */
 class NameParser

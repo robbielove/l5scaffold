@@ -32,8 +32,7 @@ class ScaffoldMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a scaffold with Semantic UI';
-
+    protected $description = 'Create a Robbielove scaffold';
 
     /**
      * Meta information for the requested migration.
@@ -47,16 +46,9 @@ class ScaffoldMakeCommand extends Command
      */
     private $composer;
 
-
-    /**
-     * Views to generate
-     *
-     * @var array
-     */
-    private $views = ['index', 'create', 'show', 'edit'];
-
     /**
      * Store name from Model
+     *
      * @var string
      */
     private $nameModel = "";
@@ -66,70 +58,140 @@ class ScaffoldMakeCommand extends Command
      *
      * @param Filesystem $files
      * @param Composer $composer
+     * @return void
      */
-    public function __construct(Filesystem $files, Composer $composer)
+    public function __construct(Filesystem $files)
     {
         parent::__construct();
 
 
         $this->files = $files;
-        $this->composer = $composer;
+        $this->composer = app()['composer'];
     }
 
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function fire()
-    {
-        // Start Scaffold
-        $this->info('Configuring ' . $this->getObjName("Name") . '...');
+    {        
+        $header = "scaffolding: {$this->getObjName("Name")}";
+        $footer = str_pad('', strlen($header), '-');
+        $dump = str_pad('>DUMP AUTOLOAD<', strlen($header), ' ', STR_PAD_BOTH);
 
-        // Setup migration and saves configs
-        $this->meta['action'] = 'create';
-        $this->meta['var_name'] = $this->getObjName("name");
-        $this->meta['table'] = $this->getObjName("names"); // Store table name
+        $this->line("\n----------- $header -----------\n");
 
-        // Generate files
+        $this->makeMeta();
         $this->makeMigration();
         $this->makeSeed();
         $this->makeModel();
         $this->makeController();
-        $this->makeViewLayout();
+        // $this->makeLocalization(); //ToDo - implement in future version
         $this->makeViews();
+        $this->makeViewLayout();
 
+        $this->line("\n----------- $footer -----------");
+        $this->comment("----------- $dump -----------");
 
+        $this->composer->dumpAutoloads();
+        $this->error("Don't forget to adjust: 'migrate' and 'routes'");
     }
-
 
     /**
      * Generate the desired migration.
+     *
+     * @return void
+     */
+    protected function makeMeta()    
+    {
+        // ToDo - Verificar utilidade...
+        $this->meta['action'] = 'create';
+        $this->meta['var_name'] = $this->getObjName("name");
+        $this->meta['table'] = $this->getObjName("names");//obsoleto
+
+        $this->meta['ui'] = $this->option('ui');
+        
+        $this->meta['namespace'] = $this->getAppNamespace();
+        
+        $this->meta['Model'] = $this->getObjName('Name');
+        $this->meta['Models'] = $this->getObjName('Names');
+        $this->meta['model'] = $this->getObjName('name');
+        $this->meta['models'] = $this->getObjName('names');
+        $this->meta['ModelMigration'] = "Create{$this->meta['Models']}Table";
+        
+        $this->meta['schema'] = $this->option('schema');
+        $this->meta['prefix'] = ($prefix = $this->option('prefix')) ? "$prefix." : "";
+    }
+
+    /**
+     * Generate the desired migration.
+     *
+     * @return void
      */
     protected function makeMigration()
     {
         new MakeMigration($this, $this->files);
     }
 
+    /**
+     * Make a Controller with default actions
+     *
+     * @return void
+     */
+    private function makeController()
+    {
+        new MakeController($this, $this->files);
+    }
+    
+    /**
+     * Make a layout.blade.php with bootstrap
+     *
+     * @return void
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function makeViewLayout()
+    {
+        new MakeLayout($this, $this->files);
+    }
 
     /**
      * Generate an Eloquent model, if the user wishes.
+     *
+     * @return void
      */
     protected function makeModel()
     {
         new MakeModel($this, $this->files);
     }
 
-
     /**
      * Generate a Seed
+     *
+     * @return void
      */
     private function makeSeed()
     {
         new MakeSeed($this, $this->files);
     }
 
+    /**
+     * Setup views and assets
+     *
+     * @return void
+     */
+    private function makeViews()
+    {
+        new MakeView($this, $this->files);
+    }
 
+    /**
+     * Setup the localizations
+     */
+    private function makeLocalization()
+    {
+        new MakeLocalization($this, $this->files);
+    }
 
     /**
      * Get the console command arguments.
@@ -138,11 +200,11 @@ class ScaffoldMakeCommand extends Command
      */
     protected function getArguments()
     {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the model. (Eg, Post)'],
+        return 
+        [
+            ['name', InputArgument::REQUIRED, 'The name of the model. (Ex: Post)'],
         ];
     }
-
 
     /**
      * Get the console command options.
@@ -151,70 +213,69 @@ class ScaffoldMakeCommand extends Command
      */
     protected function getOptions()
     {
-        return [
-            ['schema', 's', InputOption::VALUE_REQUIRED, 'Schema to generate scaffold files. (Ex: --schema="title:string")', null],
-            ['form', 'f', InputOption::VALUE_OPTIONAL, 'Use Illumintate/Html Form facade to generate input fields', false],
-            ['prefix', 'p', InputOption::VALUE_OPTIONAL, 'Generate schema with prefix', false]
+        return 
+        [
+            [
+                'schema', 
+                's', 
+                InputOption::VALUE_REQUIRED, 
+                'Schema to generate scaffold files. (Ex: --schema="title:string")', 
+                null
+            ],
+            [
+                'ui',
+                'ui',
+                InputOption::VALUE_OPTIONAL,
+                'UI Framework to generate scaffold. (Default bs3 - bootstrap 3)',
+                'bs3'
+            ],
+            [
+                'validator',
+                'a',
+                InputOption::VALUE_OPTIONAL,
+                'Validators to generate scaffold files. (Ex: --validator="title:required")',
+                null
+            ],
+            [
+                'localization',
+                'l',
+                InputOption::VALUE_OPTIONAL,
+                'Localizations to generate scaffold files. (Ex. --localization="key:value")',
+                null
+            ],
+            [
+                'lang',
+                'b',
+                InputOption::VALUE_OPTIONAL,
+                'Language for Localization (Ex. --lang="en")',
+                null,
+            ],
+            [
+                'form', 
+                'f', 
+                InputOption::VALUE_OPTIONAL, 
+                'Use Illumintate/Html Form facade to generate input fields', 
+                false
+            ],
+            [
+                'prefix', 
+                'p', 
+                InputOption::VALUE_OPTIONAL, 
+                'Generate schema with prefix', 
+                false
+            ]
         ];
     }
 
-
-    /**
-     * Make a Controller with default actions
-     */
-    private function makeController()
-    {
-
-        new MakeController($this, $this->files);
-
-    }
-
-
-    /**
-     * Setup views and assets
-     *
-     */
-    private function makeViews()
-    {
-
-        foreach ($this->views as $view) {
-            // index, create, show, edit
-            new MakeView($this, $this->files, $view);
-        }
-
-
-        $this->info('Views created successfully.');
-
-        $this->info('Dump-autoload...');
-        $this->composer->dumpAutoloads();
-
-        $this->info('<a class="item" href="{{ URL::to(\'/'.$this->getObjName("names").'\') }}"><i class="'.$this->getObjName("names").' icon"></i>'.$this->getObjName("Names").'</a> // Add to layouts/app.blade.php for slug binding');
-        $this->info('Route::bind("'.$this->getObjName("names").'", function($value, $route) { return App\\'.$this->getObjName("Name").'::whereSlug($value)->firstOrFail(); }); // Add to routes.php for slug binding');
-        $this->info('Route::resource("'.$this->getObjName("names").'","'.$this->getObjName("Name").'Controller"); // Add this line in routes.php');
-
-    }
-
-
-    /**
-     * Make a layout.blade.php with bootstrap
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    private function makeViewLayout()
-    {
-        new MakeLayout($this, $this->files);
-    }
-
-
     /**
      * Get access to $meta array
+     *
      * @return array
      */
     public function getMeta()
     {
         return $this->meta;
     }
-
 
     /**
      * Generate names
@@ -225,10 +286,8 @@ class ScaffoldMakeCommand extends Command
      */
     public function getObjName($config = 'Name')
     {
-
         $names = [];
         $args_name = $this->argument('name');
-
 
         // Name[0] = Tweet
         $names['Name'] = str_singular(ucfirst($args_name));
@@ -240,17 +299,11 @@ class ScaffoldMakeCommand extends Command
         $names['name'] = str_singular(strtolower(preg_replace('/(?<!^)([A-Z])/', '_$1', $args_name)));
 
 
-        if (!isset($names[$config])) {
+        if (!isset($names[$config])) 
+        {
             throw new \Exception("Position name is not found");
         };
 
-
         return $names[$config];
-
-
     }
-
-
-
-
 }

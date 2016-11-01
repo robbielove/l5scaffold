@@ -7,7 +7,7 @@ use Robbielove\L5scaffold\GeneratorException;
 
 /**
  * Class SyntaxBuilder with modifications by Fernando
- * @package Laralib\L5scaffold\Migrations
+ * @package Robbielove\L5scaffold\Migrations
  * @author Jeffrey Way <jeffrey@jeffrey-way.com>
  */
 class SyntaxBuilder
@@ -193,7 +193,7 @@ class SyntaxBuilder
      */
     private function getCreateSchemaWrapper()
     {
-        return file_get_contents(__DIR__ . '/../stubs/schema-create.stub');
+        return file_get_contents(__DIR__ . '/../Stubs/schema-create.stub');
     }
 
     /**
@@ -203,7 +203,7 @@ class SyntaxBuilder
      */
     private function getChangeSchemaWrapper()
     {
-        return file_get_contents(__DIR__ . '/../stubs/schema-change.stub');
+        return file_get_contents(__DIR__ . '/../Stubs/schema-change.stub');
     }
 
     /**
@@ -416,22 +416,20 @@ class SyntaxBuilder
         }
 
         switch ($field['type']) {
-            case 'string':
-            default:
-                $layout = "<input type=\"text\" id=\"$column-field\" name=\"$column\" class=\"ui input\" placeholder="$column" value=\"$value\"/>";
-                break;
             case 'date':
                 $layout = "<input type=\"text\" id=\"$column-event\" name=\"$column\" class=\"ui input\" readonly=\"true\" value=\"$value\"/>";
                 break;
             case 'boolean':
-                $layout = "<div class=\"ui row\"><label class=\"ui label\"><input type=\"radio\" value=\"true\" name=\"$column-field\" id=\"$column-field\" autocomplete=\"off\"> True</label><label class=\"ui label\"><input type=\"radio\" name=\"$column-field\" value=\"false\" id=\"$column-field\" autocomplete=\"off\"> False</label></div>";
+                $layout = "<div class=\"btn-group\" data-toggle=\"buttons\"><label class=\"btn btn-primary\"><input type=\"radio\" value=\"true\" name=\"$column\" id=\"$column-field\" autocomplete=\"off\"> True</label><label class=\"btn btn-primary active\"><input type=\"radio\" name=\"$column-field\" value=\"false\" id=\"$column-field\" autocomplete=\"off\"> False</label></div>";
                 break;
             case 'text':
                 $layout = "<textarea class=\"ui input\" id=\"$column-field\" rows=\"3\" name=\"$column\">$value</textarea>";
                 break;
+            case 'string':
+            default:
+                $layout = "<input type=\"text\" id=\"$column-field\" name=\"$column\" class=\"form-control\" value=\"$value\"/>";
         }
 
         return $layout;
     }
-
 }

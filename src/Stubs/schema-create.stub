@@ -1,0 +1,11 @@
+Schema::create('{{models}}', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->default('Un-Named {{Class}}');
+            $table->string('slug');
+            $table->text('description');
+            {{schema_up}}
+            $table->boolean('active_flag');
+            $table->integer('author_id')->unsigned()->default(0);
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->timestamps();
+        });

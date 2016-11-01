@@ -8,7 +8,6 @@
 
 namespace Robbielove\L5scaffold\Makes;
 
-
 use Illuminate\Filesystem\Filesystem;
 use Robbielove\L5scaffold\Commands\ScaffoldMakeCommand;
 use Robbielove\L5scaffold\Migrations\SchemaParser;
@@ -18,207 +17,138 @@ class MakeView
 {
     use MakerTrait;
 
-
+    /**
+     * Store scaffold command.
+     *
+     * @var ScaffoldMakeCommand
+     */
     protected $scaffoldCommandObj;
-    protected $viewName;
+
+    /**
+     * Store property of model
+     *
+     * @var array
+     */
     protected $schemaArray = [];
 
-    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files, $viewName)
+    /**
+     * Create a new instance.
+     *
+     * @param ScaffoldMakeCommand $scaffoldCommand
+     * @param Filesystem $files
+     * @param sting $viewName
+     * @return void
+     */
+    public function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
     {
         $this->files = $files;
         $this->scaffoldCommandObj = $scaffoldCommand;
-        $this->viewName = $viewName;
-        $this->getSchemaArray();
 
         $this->start();
     }
 
-    private function start()
-    {
-        $this->generateView($this->viewName); // index, show, edit and create
-    }
-
-
+    /**
+     * Get all property of model
+     *
+     * @return void
+     */
     protected function getSchemaArray()
     {
-      if($this->scaffoldCommandObj->option('schema') != null){
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
-          $this->schemaArray = (new SchemaParser)->parse($schema);
-        }
-      }
-    }
-
-
-    protected function generateView($nameView = 'index'){
-        // Get path
-        $path = $this->getPath($this->scaffoldCommandObj->getObjName('names'), 'view-'.$nameView);
-
-
-        // Create directory
-        $this->makeDirectory($path);
-
-
-        if ($this->files->exists($path)) {
-            if ($this->scaffoldCommandObj->confirm($path . ' already exists! Do you wish to overwrite? [yes|no]')) {
-                // Put file
-                $this->files->put($path, $this->compileViewStub($nameView));
+        // ToDo - schema is required?
+        if($this->scaffoldCommandObj->option('schema') != null)
+        {
+            if ($schema = $this->scaffoldCommandObj->option('schema'))
+            {
+                return (new SchemaParser)->parse($schema);
             }
-        } else {
-
-            // Put file
-            $this->files->put($path, $this->compileViewStub($nameView));
         }
 
-
+        return [];
     }
 
-
-
-
-
-
     /**
-     * Compile the migration stub.
+     * Start make view.
      *
-     * @param $nameView
-     * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return void
      */
-    protected function compileViewStub($nameView)
+    private function start()
     {
-        $stub = $this->files->get(__DIR__ . '/../stubs/html_assets/'.$nameView.'.stub');
+        $this->scaffoldCommandObj->line("\n--- Views ---");
 
-        if($nameView == 'show'){
-            // show.blade.php
-            $this->replaceName($stub)
-                ->replaceSchemaShow($stub);
+        $viewsFiles = $this->getStubViews($this->scaffoldCommandObj->getMeta()['ui']);
+        $destination = $this->getDestinationViews($this->scaffoldCommandObj->getMeta()['models']);
+        $metas = $this->scaffoldCommandObj->getMeta();
 
-        } elseif($nameView == 'edit'){
-            // edit.blade.php
-            $this->replaceName($stub)
-                ->replaceSchemaEdit($stub);
+        $metas = array_merge_recursive
+        (
+            $metas,
+            [
+                'form_fields_fillable' => $this->getFields($metas['ui'], 'fillable'),
+                'form_fields_empty' => $this->getFields($metas['ui'], 'empty'),
+                'form_fields_show' => $this->getFields($metas['ui'], 'show'),
+                'table_fields_header' => $this->getFields($metas['ui'], 'header'),
+                'table_fields_content' => $this->getFields($metas['ui'], 'content'),
+            ]
+        );
 
-        } elseif($nameView == 'create'){
-            // edit.blade.php
-            $this->replaceName($stub)
-                ->replaceSchemaCreate($stub);
+        foreach ($viewsFiles as $viewFileBaseName => $viewFile)
+        {
+            $viewFileName = str_replace('.stub', '', $viewFileBaseName);
+            $viewDestination = $destination . $viewFileName;
 
-        } else {
-            // index.blade.php
-            $this->replaceName($stub)
-                ->replaceSchemaIndex($stub);
+            if ($this->files->exists($viewDestination))
+            {
+                $this->scaffoldCommandObj->comment("   x $viewFileName");
+                continue;
+            }
+
+            $stub = $this->files->get($viewFile);
+            $stub = $this->buildStub($metas, $stub);
+            
+            $this->makeDirectory($viewDestination);
+            $this->files->put($viewDestination, $stub);
+            $this->scaffoldCommandObj->info("   + $viewFileName");
+        }
+    }
+    
+    protected function getFields($ui, $type)
+    {
+        $stubsFields = $this->getStubFields($ui, $type);
+        $stubsFieldsAllow = array_keys($stubsFields);
+        $schemas = $this->getSchemaArray();
+        $metas = $this->scaffoldCommandObj->getMeta();
+
+        $stubs = [];
+
+        foreach ($schemas as $schema)
+        {
+            $variablesFromField = $this->getVariablesFromField($schema);
+            $fieldType = $variablesFromField['field.type'];
+            
+            if(!in_array($fieldType, $stubsFieldsAllow))
+            {
+                $fieldType = 'default';
+            }
+
+            $stub = $stubsFields[$fieldType];
+            $stub = $this->buildStub($variablesFromField, $stub);
+            $stub = $this->buildStub($metas, $stub);
+
+            $stubs[] = $stub;
         }
 
-
-
-        return $stub;
+        return join(' ', $stubs);
     }
 
-
-    /**
-     * Replace the class name in the stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    protected function replaceName(&$stub)
+    private function getVariablesFromField($options)
     {
-        $stub = str_replace('{{Class}}', $this->scaffoldCommandObj->getObjName('Names'), $stub);
-        $stub = str_replace('{{class}}', $this->scaffoldCommandObj->getObjName('names'), $stub);
-        $stub = str_replace('{{classSingle}}', $this->scaffoldCommandObj->getObjName('name'), $stub);
-        $stub = str_replace('{{ClassSingle}}', $this->scaffoldCommandObj->getObjName('Name'), $stub);
+        $data = [];
+     
+        $data['field.name'] = $options['name'];
+        $data['field.Name'] = ucwords($options['name']);
+        $data['field.type'] = @$options['type'];
+        $data['field.value.default'] = @$options['options']['default'];
 
-        $prefix = $this->scaffoldCommandObj->option('prefix');
-
-        if ($prefix != null)
-            $stub = str_replace('{{prefix}}',$prefix.'.', $stub);
-        else
-            $stub = str_replace('{{prefix}}', '', $stub);
-
-        return $this;
+        return $data;
     }
-
-
-
-
-
-    /**
-     * Replace the schema for the index.stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    protected function replaceSchemaIndex(&$stub)
-    {
-
-        // Create view index header fields
-        $schema = (new SyntaxBuilder)->create($this->schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-index-header');
-        $stub = str_replace('{{header_fields}}', $schema, $stub);
-
-
-        // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($this->schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-index-content');
-        $stub = str_replace('{{content_fields}}', $schema, $stub);
-
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * Replace the schema for the show.stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    protected function replaceSchemaShow(&$stub)
-    {
-
-        // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($this->schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-show-content');
-        $stub = str_replace('{{content_fields}}', $schema, $stub);
-
-        return $this;
-    }
-
-
-    /**
-     * Replace the schema for the edit.stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    private function replaceSchemaEdit(&$stub)
-    {
-
-        // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($this->schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-edit-content', $this->scaffoldCommandObj->option('form'));
-        $stub = str_replace('{{content_fields}}', $schema, $stub);
-
-        return $this;
-
-    }
-
-
-    /**
-     * Replace the schema for the edit.stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    private function replaceSchemaCreate(&$stub)
-    {
-
-
-        // Create view index content fields
-        $schema = (new SyntaxBuilder)->create($this->schemaArray, $this->scaffoldCommandObj->getMeta(), 'view-create-content', $this->scaffoldCommandObj->option('form'));
-        $stub = str_replace('{{content_fields}}', $schema, $stub);
-
-        return $this;
-
-    }
-
 }

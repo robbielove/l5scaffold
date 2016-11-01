@@ -15,6 +15,10 @@
     "illuminate/support": "~5.0",
     "Robbielove\\L5scaffold\\": "dev-current"
   },
+  "require-dev": {
+    "laravel/laravel": "dev-master",
+    "phpunit/phpunit": "^5.4"
+  },
   "autoload": {
     "psr-4": {
       "Robbielove\\L5scaffold\\": "src/"

@@ -4,7 +4,7 @@ namespace Robbielove\L5scaffold\Migrations;
 
 /**
  * Class SchemaParser with modifications by Fernando
- * @package Laralib\L5scaffold\Migrations
+ * @package Robbielove\L5scaffold\Migrations
  * @author Jeffrey Way <jeffrey@jeffrey-way.com>
  */
 class SchemaParser

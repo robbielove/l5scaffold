@@ -27,11 +27,17 @@ Open `config/app.php` and, to your **providers** array at the bottom, add:
 You're all set. Run `php artisan` from the console, and you'll see the new commands `make:scaffold`.
 
 ## Examples
-
-
 ```
 php artisan make:scaffold Object --schema="title:string:default('Object 1'), body:text"
 ```
+or with more options
+```
+php artisan make:scaffold Object \
+	--schema="title:string:default('Object 1'), body:text" \
+	--ui="sui2" \
+	--prefix="settings"
+```
+
 This command will generate:
 
 ```
@@ -64,3 +70,9 @@ Don't forget to run:
 ```
 php artisan migrate
 ```
+## Custom stub
+Create a new folder inside **Stubs > views** with your UI name as the folder name
+
+Custom fields in `Stubs > views > **ui-name** > fields`
+
+Custom pages in `Stubs > views > **ui-name** > pages`

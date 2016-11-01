@@ -4,7 +4,8 @@ namespace Robbielove\L5scaffold;
 
 use Illuminate\Support\ServiceProvider;
 
-class GeneratorsServiceProvider extends ServiceProvider {
+class GeneratorsServiceProvider extends ServiceProvider
+{
 
 	/**
 	 * Bootstrap the application services.
@@ -14,7 +15,6 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		//
-
 	}
 
 	/**
@@ -24,14 +24,13 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-
 		$this->registerScaffoldGenerator();
-
 	}
-
 
 	/**
 	 * Register the make:scaffold generator.
+	 *
+	 * @return void
 	 */
 	private function registerScaffoldGenerator()
 	{
@@ -41,6 +40,4 @@ class GeneratorsServiceProvider extends ServiceProvider {
 
 		$this->commands('command.larascaf.scaffold');
 	}
-
-
 }

@@ -1,0 +1,117 @@
+@extends('layouts.app')
+
+@section('header')
+<<<<<<< HEAD:src/stubs/html_assets/index.stub
+    <div class="ui header">
+        <h1><i class="big {{class}} icon"></i>{{Class}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
+        <div class="ui buttons">
+          <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{class}}.create') }}"><i class="add circle icon"></i>Create</a>
+        </div>
+=======
+    <div class="page-header clearfix">
+        <h1>
+            <i class="glyphicon glyphicon-align-justify"></i> {{Model}}
+            <a class="btn btn-success pull-right" href="{{ route('{{prefix}}{{models}}.create') }}"><i class="glyphicon glyphicon-plus"></i> Create</a>
+        </h1>
+>>>>>>> refs/remotes/upstream/master:src/Stubs/views/bs3/pages/index.blade.php.stub
+    </div>
+    @if(session('message_type'))
+    <div class="ui {{ session('message_type') }} icon message">
+      <i class="{{ session('message_icon') }} icon"></i>
+      <div class="content">
+        <div class="header">{{ session('message_header') }}</div>
+        <p>{{ session('message') }}</p>
+      </div>
+    </div>
+    @endif
+@endsection
+
+@section('content')
+<<<<<<< HEAD:src/stubs/html_assets/index.stub
+
+        @if(${{class}}->count())
+            <div class="ui very padded stackable grid center aligned">
+                <div class="row">
+                  <div class="four wide black column"><i class="{{class}} icon"></i>Name</div>
+                  <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
+                  <div class="four wide black column"><i class="left align icon"></i>Description</div>
+                  <div class="four wide black column"><i class="user icon"></i>Author</div>
+                  {{header_fields}}
+                </div>
+                @foreach(${{class}} as ${{classSingle}})
+                <div class="row">
+                  <div class="four wide column"><a href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><h4>{{${{classSingle}}->name}}</h4></a></div>
+                  <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{class}}.show', [${{classSingle}}->slug]) }}</a></div>
+                  <div class="four wide column">{!! str_limit(strip_tags(${{classSingle}}->description), 200) !!}</div>
+                  <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [${{classSingle}}->Author->slug]) }}"><i class="user icon"></i>{{${{classSingle}}->Author->name}}</a></div>
+                  {{content_fields}}
+                </div>
+                <div class="ui sixteen wide column vertical segment">
+                    <a href="{{ route('{{prefix}}{{class}}.show', ${{classSingle}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
+                    <a href="{{ route('{{prefix}}{{class}}.edit', ${{classSingle}}->slug) }}"><button class="ui mini teal button"><i class="edit icon"></i>Edit</button></a>
+                    <form action="{{ route('{{class}}.destroy', ${{classSingle}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="ui mini button"><i class="hide icon"></i>De-Activate</button>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+          </div>
+          <div class="ui padded center aligned vertical stripe segment">
+          {!! (new Landish\Pagination\SemanticUI(${{class}}))->render() !!}
+=======
+    <div class="row">
+        <div class="col-md-12">
+            @if(${{models}}->count())
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            {{table_fields_header}}
+                            <th class="text-right">OPTIONS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach(${{models}} as ${{model}})
+                            <tr>
+                                <td class="text-center"><strong>{{${{model}}->id}}</strong></td>
+
+                                {{table_fields_content}}
+                                
+                                <td class="text-right">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('{{prefix}}{{models}}.show', ${{model}}->id) }}">
+                                        <i class="glyphicon glyphicon-eye-open"></i> View
+                                    </a>
+                                    
+                                    <a class="btn btn-xs btn-warning" href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->id) }}">
+                                        <i class="glyphicon glyphicon-edit"></i> Edit
+                                    </a>
+
+                                    <form action="{{ route('{{prefix}}{{models}}.destroy', ${{model}}->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete? Are you sure?');">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="_method" value="DELETE">
+
+                                        <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {!! ${{models}}->render() !!}
+>>>>>>> refs/remotes/upstream/master:src/Stubs/views/bs3/pages/index.blade.php.stub
+            @else
+              <div class="ui icon error message"><i class="remove icon"></i>
+                <div class="content">
+                  <div class="header">No Active {{Class}} Found!</div>
+                  <p>Create one to get started...</p>
+                </div>
+              </div>
+            @endif
+
+        </div>
+    </div>
+
+@endsection

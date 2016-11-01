@@ -4,147 +4,90 @@ namespace Robbielove\L5scaffold\Makes;
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
 use Robbielove\L5scaffold\Commands\ScaffoldMakeCommand;
-use Robbielove\L5scaffold\Migrations\SchemaParser;
-use Robbielove\L5scaffold\Migrations\SyntaxBuilder;
+use Robbielove\L5scaffold\Validators\SchemaParser as ValidatorParser;
+use Robbielove\L5scaffold\Validators\SyntaxBuilder as ValidatorSyntax;
 
 
 class MakeController
 {
     use AppNamespaceDetectorTrait, MakerTrait;
 
-
-
+    /**
+     * Store name from Model
+     *
+     * @var ScaffoldMakeCommand
+     */
     protected $scaffoldCommandObj;
 
+    /**
+     * Create a new instance.
+     *
+     * @param ScaffoldMakeCommand $scaffoldCommand
+     * @param Filesystem $files
+     * @return void
+     */
     function __construct(ScaffoldMakeCommand $scaffoldCommand, Filesystem $files)
     {
         $this->files = $files;
         $this->scaffoldCommandObj = $scaffoldCommand;
 
         $this->start();
-
     }
-
-    private function start()
-    {
-        // Cria o nome do arquivo do controller // TweetController
-
-
-        $name = $this->scaffoldCommandObj->getObjName('Name') . 'Controller';
-
-        // Verifica se o arquivo existe com o mesmo o nome
-        if ($this->files->exists($path = $this->getPath($name))) {
-            return $this->scaffoldCommandObj->error($name . ' already exists!');
-        }
-
-        // Cria a pasta caso nao exista
-        $this->makeDirectory($path);
-
-        // Grava o arquivo
-        $this->files->put($path, $this->compileControllerStub());
-
-        $this->scaffoldCommandObj->info('Controller created successfully.');
-
-        //$this->composer->dumpAutoloads();
-    }
-
-
-
-
 
     /**
-     * Compile the migration stub.
+     * Start make controller.
+     *
+     * @return void
+     */
+    private function start()
+    {
+        $name = $this->scaffoldCommandObj->getObjName('Name') . 'Controller';
+        $path = $this->getPath($name, 'controller');
+
+        if ($this->files->exists($path)) 
+        {
+            return $this->scaffoldCommandObj->comment("x $name");
+        }
+
+        $this->makeDirectory($path);
+
+        $this->files->put($path, $this->compileControllerStub());
+
+        $this->scaffoldCommandObj->info('+ Controller');
+    }
+
+    /**
+     * Compile the controller stub.
      *
      * @return string
      */
     protected function compileControllerStub()
     {
-        $stub = $this->files->get(__DIR__ . '/../stubs/controller.stub');
+        $stub = $this->files->get(substr(__DIR__,0, -5) . 'Stubs/controller.stub');
 
-        $this->replaceClassName($stub, "controller")
-            ->replaceModelPath($stub)
-            ->replaceModelName($stub)
-            ->replaceSchema($stub, 'controller');
-
+        $this->buildStub($this->scaffoldCommandObj->getMeta(), $stub);
+        // $this->replaceValidator($stub);
 
         return $stub;
     }
 
 
-    /**
-     * Replace the class name in the stub.
-     *
-     * @param  string $stub
-     * @return $this
-     */
-    protected function replaceClassName(&$stub)
-    {
+    // /**
+    //  * Replace validator in the controller stub.
+    //  *
+    //  * @return $this
+    //  */
+    // private function replaceValidator(&$stub)
+    // {
+    //     if($schema = $this->scaffoldCommandObj->option('validator')){
+    //         $schema = (new ValidatorParser)->parse($schema);
+    //     }
 
-        $className = $this->scaffoldCommandObj->getObjName('Name') . 'Controller';
-        $stub = str_replace('{{class}}', $className, $stub);
+    //     $schema = (new ValidatorSyntax)->create($schema, $this->scaffoldCommandObj->getMeta(), 'validation');
+    //     $stub = str_replace('{{validation_fields}}', $schema, $stub);
 
-        return $this;
-    }
-
-
-    /**
-     * Renomeia o endereço do Model para o controller
-     *
-     * @param $stub
-     * @return $this
-     */
-    private function replaceModelPath(&$stub)
-    {
-
-        $model_name = $this->getAppNamespace() . $this->scaffoldCommandObj->getObjName('Name');
-        $stub = str_replace('{{model_path}}', $model_name, $stub);
-
-        return $this;
-
-    }
+    //     return $this;
+    // }
 
 
-    private function replaceModelName(&$stub)
-    {
-        $model_name_uc = $this->scaffoldCommandObj->getObjName('Name');
-        $model_name = $this->scaffoldCommandObj->getObjName('name');
-        $model_names = $this->scaffoldCommandObj->getObjName('names');
-        $prefix = $this->scaffoldCommandObj->option('prefix');
-        
-        $stub = str_replace('{{model_name_class}}', $model_name_uc, $stub);
-        $stub = str_replace('{{model_name_var_sgl}}', $model_name, $stub);
-        $stub = str_replace('{{model_name_var}}', $model_names, $stub);
-        
-        if ($prefix != null)
-            $stub = str_replace('{{prefix}}', $prefix.'.', $stub);
-        else
-            $stub = str_replace('{{prefix}}', '', $stub);
-        
-        return $this;
-    }
-
-
-    /**
-     * Replace the schema for the stub.
-     *
-     * @param  string $stub
-     * @param string $type
-     * @return $this
-     */
-    protected function replaceSchema(&$stub, $type = 'migration')
-    {
-
-        if ($schema = $this->scaffoldCommandObj->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
-        }
-
-
-
-        // Create controllers fields
-        $schema = (new SyntaxBuilder)->create($schema, $this->scaffoldCommandObj->getMeta(), 'controller');
-        $stub = str_replace('{{model_fields}}', $schema, $stub);
-
-
-        return $this;
-    }
 }
