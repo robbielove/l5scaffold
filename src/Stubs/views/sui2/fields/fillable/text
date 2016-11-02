@@ -1,0 +1,4 @@
+<div class="ui input">
+	<label for="{{field.name}}-field">{{field.Name}}</label>
+	<textarea name="{{field.name}}" id="{{field.name}}-field" class="ui input" rows="5">{{ old('{{field.name}}', ${{model}}->{{field.name}} ) }}</textarea>
+</div>

@@ -1,0 +1,11 @@
+<div class="four wide column">
+   <h4><i class="{{field.name}} icon"></i>{{field.Name}}</h4>
+</div>
+<div class="twelve wide column ">
+  <div class="ui fluid corner labeled input">
+    <textarea class="ui input" id="{{field.name}}-field" rows="5" name="{{field.name}}" placeholder="{{field.Name}}"></textarea>
+    <div class="ui corner label">
+      <i class="asterisk icon"></i>
+    </div>
+  </div>
+</div>

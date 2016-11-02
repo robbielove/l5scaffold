@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\User;
+use Auth;
+
+use {{namespace}}{{Model}};
+use Illuminate\Http\Request;
+use \Session;
+
+class {{Model}}Controller extends Controller
+{
+	/**
+	 * Variable to model
+	 *
+	 * @var {{model}}
+	 */
+	protected $model;
+
+	/**
+	 * Create instance of controller with Model
+	 *
+	 * @return void
+	 */
+	public function __construct({{Model}} $model)
+	{
+		$this->model = $model;
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		${{models}} = {{Model}}::where('active_flag', 1)->orderBy('id', 'desc')->paginate(10);
+		$active = {{Model}}::where('active_flag', 1);
+		return view('{{models}}.index', compact('{{models}}', 'active'));
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		return view('{{models}}.create');
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param Request $request
+	 * @return Response
+	 */
+	public function store(Request $request, User $user)
+	{
+		${{model}} = new {{Model}}();
+
+		${{model}}->title = $request->input("title");
+		${{model}}->slug = str_slug($request->input("title"), "-");
+		${{model}}->active_flag = 1;
+		${{model}}->author_id = $request->user()->id;
+
+		${{model}}->save();
+
+		Session::flash('message_type', 'success');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Created.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show({{Model}} ${{model}})
+	{
+		//${{model}} = $this->model->findOrFail($id);
+
+		return view('{{models}}.show', compact('{{model}}'));
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit({{Model}} ${{model}})
+	{
+		//${{model}} = $this->model->findOrFail($id);
+
+		return view('{{models}}.edit', compact('{{model}}'));
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @param Request $request
+	 * @return Response
+	 */
+	public function update(Request $request, {{Model}} ${{model}}, User $user)
+	{
+
+		${{model}}->title = $request->input("title");
+		${{model}}->slug = $request->input("slug");
+		${{model}}->active_flag = 1;//change to reflect current status or changed status
+		${{model}}->author_id = $request->user()->id;
+
+		${{model}}->save();
+
+		Session::flash('message_type', 'blue');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Updated.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy({{Model}} ${{model}})
+	{
+		${{model}}->active_flag = 0;
+		${{model}}->save();
+
+		Session::flash('message_type', 'negative');
+		Session::flash('message_icon', 'hide');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was De-Activated.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
+	}
+}
