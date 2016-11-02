@@ -1,4 +1,0 @@
-<div class="ui input">
-	<label for="{{field.name}}-field">{{field.Name}}</label>
-	--{{field.name}}--
-</div>
