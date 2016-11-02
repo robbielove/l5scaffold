@@ -26,7 +26,6 @@
           <div class="four wide black column"><i class="linkify icon"></i>Slug</div>
           <div class="four wide black column"><i class="left align icon"></i>Description</div>
           <div class="four wide black column"><i class="user icon"></i>Author</div>
-          {{header_fields}}
         </div>
         @foreach(${{models}} as ${{model}})
         <div class="row">
