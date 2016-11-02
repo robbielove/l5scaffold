@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\User;
+use Auth;
+
 use {{namespace}}{{Model}};
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use \Session;
 
 class {{Model}}Controller extends Controller
 {
@@ -33,7 +39,7 @@ class {{Model}}Controller extends Controller
 	public function index()
 	{
 		${{models}} = {{Model}}::where('active_flag', 1)->orderBy('id', 'desc')->paginate(10);
-		$active = Page::where('active_flag', 1);
+		$active = {{Model}}::where('active_flag', 1);
 		return view('{{models}}.index', compact('{{models}}', 'active'));
 	}
 

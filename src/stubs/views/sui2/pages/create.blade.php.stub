@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="plus circle icon"></i> {{Model}} / Create </h1>
+        <h1><i class="plus circle icon"></i> {{Models}} / Create </h1>
     </div>
 @endsection
 

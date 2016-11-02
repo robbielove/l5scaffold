@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="edit icon"></i> {{Model}} / Edit {{${{model}}->name}}</h1>
+        <h1><i class="edit icon"></i> {{Models}} / Edit {{${{model}}->name}}</h1>
     </div>
 @endsection
 

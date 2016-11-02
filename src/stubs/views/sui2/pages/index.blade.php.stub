@@ -53,7 +53,7 @@
 @else
   <div class="ui icon error message"><i class="remove icon"></i>
     <div class="content">
-      <div class="header">No Active {{Model}} Found!</div>
+      <div class="header">No Active {{Models}} Found!</div>
       <p>Create one to get started...</p>
     </div>
   </div>
