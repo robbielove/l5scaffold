@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\User;
+use Auth;
+
 use {{namespace}}{{Model}};
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use \Session;
 
 class {{Model}}Controller extends Controller
 {
@@ -32,9 +38,9 @@ class {{Model}}Controller extends Controller
 	 */
 	public function index()
 	{
-		${{models}} = $this->model->paginate();
-
-		return view('{{models}}.index', compact('{{models}}'));
+		${{models}} = {{Model}}::where('active_flag', 1)->orderBy('id', 'desc')->paginate(10);
+		$active = {{Model}}::where('active_flag', 1);
+		return view('{{models}}.index', compact('{{models}}', 'active'));
 	}
 
 	/**
@@ -53,12 +59,23 @@ class {{Model}}Controller extends Controller
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store(Request $request, User $user)
 	{
-		$inputs = $request->all();
-		$this->model->create($inputs);
+		${{model}} = new {{Model}}();
 
-		return redirect()->route('{{prefix}}{{models}}.index')->with('message', 'Item created successfully.');
+		${{model}}->title = $request->input("title");
+		${{model}}->slug = str_slug($request->input("title"), "-");
+		${{model}}->active_flag = 1;
+		${{model}}->author_id = $request->user()->id;
+
+		${{model}}->save();
+
+		Session::flash('message_type', 'success');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Created.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
 	}
 
 	/**
@@ -67,10 +84,10 @@ class {{Model}}Controller extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show({{Model}} ${{model}})
 	{
-		${{model}} = $this->model->findOrFail($id);
-		
+		//${{model}} = $this->model->findOrFail($id);
+
 		return view('{{models}}.show', compact('{{model}}'));
 	}
 
@@ -80,10 +97,10 @@ class {{Model}}Controller extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit({{Model}} ${{model}})
 	{
-		${{model}} = $this->model->findOrFail($id);
-		
+		//${{model}} = $this->model->findOrFail($id);
+
 		return view('{{models}}.edit', compact('{{model}}'));
 	}
 
@@ -94,14 +111,22 @@ class {{Model}}Controller extends Controller
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function update(Request $request, $id)
+	public function update(Request $request, {{Model}} ${{model}}, User $user)
 	{
-		$inputs = $request->all();
 
-		${{model}} = $this->model->findOrFail($id);		
-		${{model}}->update($inputs);
+		${{model}}->title = $request->input("title");
+		${{model}}->slug = $request->input("slug");
+		${{model}}->active_flag = 1;//change to reflect current status or changed status
+		${{model}}->author_id = $request->user()->id;
 
-		return redirect()->route('{{prefix}}{{models}}.index')->with('message', 'Item updated successfully.');
+		${{model}}->save();
+
+		Session::flash('message_type', 'blue');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Updated.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
 	}
 
 	/**
@@ -110,10 +135,16 @@ class {{Model}}Controller extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy({{Model}} ${{model}})
 	{
-		$this->model->destroy($id);
+		${{model}}->active_flag = 0;
+		${{model}}->save();
 
-		return redirect()->route('{{prefix}}{{models}}.index')->with('message', 'Item deleted successfully.');
+		Session::flash('message_type', 'negative');
+		Session::flash('message_icon', 'hide');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was De-Activated.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
 	}
 }
