@@ -33,7 +33,6 @@
           <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}</a></div>
           <div class="four wide column">{!! str_limit(strip_tags(${{model}}->description), 200) !!}</div>
           <div class="four wide column"><a class="ui mini label" href="{{ route('users.public', [${{model}}->Author->slug]) }}"><i class="user icon"></i>{{${{model}}->Author->name}}</a></div>
-          {{content_fields}}
         </div>
         <div class="ui sixteen wide column vertical segment">
             <a href="{{ route('{{prefix}}{{models}}.show', ${{model}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
