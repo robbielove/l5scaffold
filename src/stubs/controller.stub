@@ -65,7 +65,6 @@ class {{Model}}Controller extends Controller
 
 		${{model}}->title = $request->input("title");
 		${{model}}->slug = str_slug($request->input("title"), "-");
-		${{model}}->content = $request->input("content");
 		${{model}}->active_flag = 1;
 		${{model}}->author_id = $request->user()->id;
 
@@ -117,7 +116,6 @@ class {{Model}}Controller extends Controller
 
 		${{model}}->title = $request->input("title");
 		${{model}}->slug = $request->input("slug");
-		${{model}}->content = $request->input("content");
 		${{model}}->active_flag = 1;//change to reflect current status or changed status
 		${{model}}->author_id = $request->user()->id;
 
