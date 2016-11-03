@@ -28,7 +28,7 @@
       </div>
       <div class="twelve wide column @if($errors->has('name')) has-error @endif">
         <div class="ui fluid corner labeled input">
-          <input type="text" id="name-field" name="name" class="ui input" value="{{ $test->name }}" placeholder="{{Model}} Name"/>
+          <input type="text" id="name-field" name="name" class="ui input" value="{{ ${{model}}->name }}" placeholder="{{Model}} Name"/>
           <div class="ui corner label">
             <i class="asterisk icon"></i>
           </div>
@@ -42,7 +42,7 @@
       </div>
       <div class="twelve wide column @if($errors->has('description')) has-error @endif">
         <div class="ui fluid corner labeled input">
-          <textarea class="ui input" id="description-field" rows="5" name="description" placeholder="Description">{{ $test->description }}</textarea>
+          <textarea class="ui input" id="description-field" rows="5" name="description" placeholder="Description">{{ ${{model}}->description }}</textarea>
           <div class="ui corner label">
             <i class="asterisk icon"></i>
           </div>
