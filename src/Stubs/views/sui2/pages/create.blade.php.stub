@@ -11,6 +11,34 @@
 <form action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="ui two column very padded stackable grid">
+      <div class="four wide column">
+         <h4><i class="{{model}} icon"></i>Name</h4>
+      </div>
+      <div class="twelve wide column @if($errors->has('name')) error @endif">
+        <div class="ui fluid corner labeled input">
+          <input type="text" id="name-field" name="{{Model}} name" class="ui input" value="{{ old("name") }}" placeholder="{{Model}} Name"/>
+          <div class="ui corner label">
+            <i class="asterisk icon"></i>
+          </div>
+        </div>
+         @if($errors->has("name"))
+          <span class="ui pointing red basic label">{{ $errors->first("name") }}</span>
+         @endif
+      </div>
+      <div class="four wide column">
+         <h4><i class="left align icon"></i>Description</h4>
+      </div>
+      <div class="twelve wide column @if($errors->has('description')) error @endif">
+        <div class="ui fluid corner labeled input">
+          <textarea class="ui input" id="description-field" rows="5" name="description" placeholder="Description">{{ old("description") }}</textarea>
+          <div class="ui corner label">
+            <i class="asterisk icon"></i>
+          </div>
+        </div>
+         @if($errors->has("description"))
+          <span class="ui pointing red basic label">{{ $errors->first("description") }}</span>
+         @endif
+      </div>
       {{form_fields_empty}}
     </div>
     <div class="ui divider"></div>

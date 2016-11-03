@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1><i class="edit icon"></i> {{Models}} / Edit {{${{model}}->name}}</h1>
+        <h1><i class="edit icon"></i> {{Models}} / Edit</h1>
     </div>
 @endsection
 
@@ -11,7 +11,46 @@
 <form action="{{ route('{{prefix}}{{models}}.update', ${{model}}->slug) }}" method="POST">
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <input type="hidden" id="active_flag-field" name="active_flag" class="ui input" value="{{ ${{model}}->active_flag }}"/>
+    <div class="field">
+         <h2>
+           <i class="{{model}} icon"></i>
+         @if (${{model}}->name != '')
+            {{${{model}}->name}}
+         @else
+            Un-Named {{Model}}
+         @endif
+         </h2>
+    </div>
     <div class="ui two column very padded stackable grid">
+      <div class="four wide column">
+             <h4><i class="{{model}} icon"></i>{{Model}} Name</h4>
+      </div>
+      <div class="twelve wide column @if($errors->has('name')) has-error @endif">
+        <div class="ui fluid corner labeled input">
+          <input type="text" id="name-field" name="name" class="ui input" value="{{ $test->name }}" placeholder="{{Model}} Name"/>
+          <div class="ui corner label">
+            <i class="asterisk icon"></i>
+          </div>
+        </div>
+           @if($errors->has("name"))
+            <span class="ui pointing red basic label">{{ $errors->first("name") }}</span>
+           @endif
+      </div>
+      <div class="four wide column">
+        <h4><i class="left align icon"></i>Description</h4>
+      </div>
+      <div class="twelve wide column @if($errors->has('description')) has-error @endif">
+        <div class="ui fluid corner labeled input">
+          <textarea class="ui input" id="description-field" rows="5" name="description" placeholder="Description">{{ $test->description }}</textarea>
+          <div class="ui corner label">
+            <i class="asterisk icon"></i>
+          </div>
+        </div>
+           @if($errors->has("description"))
+            <span class="ui pointing red basic label">{{ $errors->first("description") }}</span>
+           @endif
+      </div>
       {{form_fields_fillable}}
     </div>
     <div class="ui divider"></div>
