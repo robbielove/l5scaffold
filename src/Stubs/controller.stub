@@ -63,8 +63,8 @@ class {{Model}}Controller extends Controller
 	{
 		${{model}} = new {{Model}}();
 
-		${{model}}->title = $request->input("title");
-		${{model}}->slug = str_slug($request->input("title"), "-");
+		${{model}}->name = $request->input("name");
+		${{model}}->slug = str_slug($request->input("name"), "-");
 		${{model}}->active_flag = 1;
 		${{model}}->author_id = $request->user()->id;
 
@@ -114,8 +114,8 @@ class {{Model}}Controller extends Controller
 	public function update(Request $request, {{Model}} ${{model}}, User $user)
 	{
 
-		${{model}}->title = $request->input("title");
-		${{model}}->slug = $request->input("slug");
+		${{model}}->name = $request->input("name");
+    ${{model}}->slug = str_slug($request->input("name"), "-");
 		${{model}}->active_flag = 1;//change to reflect current status or changed status
 		${{model}}->author_id = $request->user()->id;
 

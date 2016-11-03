@@ -1,5 +1,5 @@
 <div class="four wide column">
-  <h4><i class="pointing right icon"></i>{{field.Name}}</h4>
+  <h4><i class="{{model}} icon"></i>{{field.Name}}</h4>
 </div>
 <div class="twelve wide column">
   <h4>{{ ${{model}}->{{field.name}} }}</h4>
