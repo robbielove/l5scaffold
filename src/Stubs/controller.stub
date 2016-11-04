@@ -69,6 +69,11 @@ class {{Model}}Controller extends Controller
 		${{model}}->active_flag = 1;
 		${{model}}->author_id = $request->user()->id;
 
+		$this->validate($request, [
+					 'name' => 'required|max:255',
+					 'description' => 'required'
+			 ]);
+
 		${{model}}->save();
 
 		Session::flash('message_type', 'success');
@@ -121,6 +126,11 @@ class {{Model}}Controller extends Controller
 		${{model}}->active_flag = 1;//change to reflect current status or changed status
 		${{model}}->author_id = $request->user()->id;
 
+		$this->validate($request, [
+					 'name' => 'required|max:255',
+					 'description' => 'required'
+			 ]);
+			 
 		${{model}}->save();
 
 		Session::flash('message_type', 'blue');
