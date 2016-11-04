@@ -38,7 +38,7 @@
        <div class="twelve wide column">
          <h5>
            <div class="ui label"><i class="calendar icon"></i>{{ date('j F Y', strtotime(${{model}}->created_at)) }}
-           <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->created_at)) }}</div>
+           <i class=" icon"></i> <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->created_at)) }}</div>
          </h5>
       </div>
       <div class="four wide column">
@@ -47,7 +47,7 @@
        <div class="twelve wide column">
          <h5>
            <div class="ui label"><i class="calendar icon"></i>{{ date('j F Y', strtotime(${{model}}->updated_at)) }}
-           <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->updated_at)) }}</div>
+           <i class=" icon"></i> <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->updated_at)) }}</div>
          </h5>
       </div>
         <div class="four wide column">
