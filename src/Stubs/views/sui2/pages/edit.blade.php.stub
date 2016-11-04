@@ -8,7 +8,7 @@
 
 @section('content')
     @include('error')
-<form action="{{ route('{{prefix}}{{models}}.update', ${{model}}->slug) }}" method="POST">
+<form class="ui form" action="{{ route('{{prefix}}{{models}}.update', ${{model}}->slug) }}" method="POST">
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" id="active_flag-field" name="active_flag" class="ui input" value="{{ ${{model}}->active_flag }}"/>

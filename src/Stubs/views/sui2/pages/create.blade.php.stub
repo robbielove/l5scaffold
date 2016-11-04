@@ -8,7 +8,7 @@
 
 @section('content')
     @include('error')
-<form action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
+<form class="ui form" action="{{ route('{{prefix}}{{models}}.store') }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="ui two column very padded stackable grid">
       <div class="four wide column">
