@@ -32,18 +32,24 @@
         <div class="twelve wide column">
           <h4><a href="{{ ${{model}}->slug }}" target="_blank">{{ route('{{models}}.show', [${{model}}->slug]) }}</a></h4>
         </div>
-        <div class="four wide column">
-          <h4><i class="wait icon"></i>Created</h4>
-        </div>
-        <div class="twelve wide column">
-          <h5>{{ date('j F Y g:i a', strtotime(${{model}}->created_at)) }}</h5>
-        </div>
-        <div class="four wide column">
-          <h4><i class="history icon"></i>Updated</h4>
-        </div>
-        <div class="twelve wide column">
-          <h5>{{ date('j F Y g:i a', strtotime(${{model}}->updated_at)) }}</h5>
-        </div>
+      <div class="four wide column">
+         <h4><i class="write icon"></i>Created</h4>
+       </div>
+       <div class="twelve wide column">
+         <h5>
+           <div class="ui label"><i class="calendar icon"></i>{{ date('j F Y', strtotime(${{model}}->created_at)) }}
+           <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->created_at)) }}</div>
+         </h5>
+      </div>
+      <div class="four wide column">
+         <h4><i class="edit icon"></i>Updated</h4>
+       </div>
+       <div class="twelve wide column">
+         <h5>
+           <div class="ui label"><i class="calendar icon"></i>{{ date('j F Y', strtotime(${{model}}->updated_at)) }}
+           <i class="time icon"></i>{{ date('g:i a', strtotime(${{model}}->updated_at)) }}</div>
+         </h5>
+      </div>
         <div class="four wide column">
           <h4><i class="align left icon"></i>Description</h4>
         </div>
