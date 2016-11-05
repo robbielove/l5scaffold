@@ -27,10 +27,11 @@ Open `config/app.php` and, to your **providers** array at the bottom, add:
 You're all set. Run `php artisan` from the console, and you'll see the new commands `make:scaffold`.
 
 ## Examples
+(Don't include the default fields: id, name, description, slug, active_flag, author_id, timestamps)
 ```
-php artisan make:scaffold Object --schema="title:string:default('Object 1'), body:text"
+php artisan make:scaffold Object --ui=sui2 --schema="title:string:default('Object 1'), body:text"
 ```
-or with more options
+Or with more options
 ```
 php artisan make:scaffold Object \
 	--schema="title:string:default('Object 1'), body:text" \
@@ -38,7 +39,8 @@ php artisan make:scaffold Object \
 	--prefix="settings"
 ```
 
-This command will generate:
+`php artisan make:scaffold --ui=sui2 --schema="title:string" Object`
+These commands will generate:
 
 ```
 app/Object.php
@@ -58,7 +60,9 @@ $table->increments('id');
 $table->string('name')->default('Un-Named {{Class}}');
 $table->string('slug');
 $table->text('description');
+
 [Your custom fields]
+
 $table->boolean('active_flag');
 $table->integer('author_id')->unsigned()->default(0);
 $table->foreign('author_id')->references('id')->on('users');
@@ -70,6 +74,12 @@ Don't forget to run:
 ```
 php artisan migrate
 ```
+
+After migrating you should add the fields you added to the schema, to the controller as they are not added during the scaffold process. Ensure you add them to the create and update methods and include in validation if needed. The default fields will work out-the-box.
+
+The stubs use the model name to add the icon also, in most cases this will not match up with a Semantic UI icon in which case you will need to choose one and then modify the scaffolds with the new icon name
+[Semantic UI icons](http://semantic-ui.com/)
+
 ## Custom stub
 Create a new folder inside **Stubs > views** with your UI name as the folder name
 

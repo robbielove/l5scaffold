@@ -16,7 +16,7 @@
       </div>
       <div class="twelve wide column @if($errors->has('name')) error @endif">
         <div class="ui fluid corner labeled input">
-          <input type="text" id="name-field" name="{{Model}} name" class="ui input" value="{{ old("name") }}" placeholder="{{Model}} Name"/>
+          <input type="text" id="name-field" name="name" class="ui input" value="{{ old("name") }}" placeholder="{{Model}} Name"/>
           <div class="ui corner label">
             <i class="asterisk icon"></i>
           </div>
