@@ -31,7 +31,7 @@
         <div class="row">
           <div class="four wide column">
             <a href="{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}"><h4>{{${{model}}->name}}</h4></a>
-            <div class="ui mini label" data-tooltip="{{ date('j F Y g:i a', strtotime(${{model}}->created_at)) }}" data-inverted=""><i class="edit icon"></i>{{ date('j/n/y', strtotime(${{model}}->created_at)) }}</div>
+            <div class="ui mini label" data-tooltip="{{ date('j F Y g:i a', strtotime(${{model}}->created_at)) }}" data-inverted=""><i class="write icon"></i>{{ date('j/n/y', strtotime(${{model}}->created_at)) }}</div>
             <div class="ui mini label" data-tooltip="{{ date('j F Y g:i a', strtotime(${{model}}->updated_at)) }}" data-inverted=""><i class="edit icon"></i>{{ date('j/n/y', strtotime(${{model}}->updated_at)) }}</div>
           </div>
           <div class="four wide column"><a class="ui basic mini label" href="{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}"><i class="linkify icon"></i>{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}</a></div>
