@@ -19,7 +19,7 @@ composer require landish/pagination
 Open `config/app.php` and, to your **providers** array at the bottom, add:
 
 ```
-"Robbielove\L5scaffold\GeneratorsServiceProvider"
+        Robbielove\L5scaffold\GeneratorsServiceProvider::class,
 ```
 
 ### Step 3: Run Artisan!
@@ -39,7 +39,10 @@ php artisan make:scaffold Object \
 	--prefix="settings"
 ```
 
-`php artisan make:scaffold --ui=sui2 --schema="title:string" Object`
+```
+php artisan make:scaffold --ui=sui2 --schema="title:string" Object
+```
+
 These commands will generate:
 
 ```
@@ -69,16 +72,38 @@ $table->foreign('author_id')->references('id')->on('users');
 $table->timestamps();
 ```
 
-Don't forget to run:
+And you will need to run the migration after ensuring it is correct;
 
 ```
 php artisan migrate
 ```
 
-After migrating you should add the fields you added to the schema, to the controller as they are not added during the scaffold process. Ensure you add them to the create and update methods and include in validation if needed. The default fields will work out-the-box.
+## Scaffold updating and customisation
+
+
+After migrating you should add the fields that you added to the schema, to the controller as they are not added during the scaffold process. Ensure you add them to the create and update methods and include in validation if needed. The default fields will work out-the-box.
 
 The stubs use the model name to add the icon also, in most cases this will not match up with a Semantic UI icon in which case you will need to choose one and then modify the scaffolds with the new icon name
 [Semantic UI icons](http://semantic-ui.com/)
+
+Add your Routes to app/Http/routes.php
+
+```
+Route::bind('objects', function($value, $route) {
+  return App\Object::whereSlug($value)->firstOrFail();
+});
+Route::resource("objects","ObjectController");
+```
+with prefix: (in some cases you may want to leave off some views such as index and create views)
+use the previous code if you use prefix groups since the prefix encloses that code instead.
+
+if you are prefixing a top level object, make sure you place your prefixed routes above the top level pattern to avoid Laravel from skipping those routes and returning 404 errors (bit of a gotcha)
+```
+Route::bind('objects', function($value, $route) {
+  return App\Object::whereSlug($value)->firstOrFail();
+});
+Route::resource('prefixes.objects', 'TaskController',['except' => ['index'],['create']]);
+```
 
 ## Custom stub
 Create a new folder inside **Stubs > views** with your UI name as the folder name
