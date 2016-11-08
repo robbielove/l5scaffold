@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="ui header">
-        <h1>{{Models}} / Show</h1>
+        <h1><i class="big unhide icon"></i> {{Models}} / Show</h1>
     </div>
 @endsection
 
