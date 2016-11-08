@@ -30,7 +30,7 @@
           <h4><i class="linkify icon"></i>Slug</h4>
         </div>
         <div class="twelve wide column">
-          <h4><a href="{{ ${{model}}->slug }}" target="_blank">{{ route('{{models}}.show', [${{model}}->slug]) }}</a></h4>
+          <h4><a href="{{ ${{model}}->slug }}" target="_blank">{{ route('{{prefix}}{{models}}.show', [${{model}}->slug]) }}</a></h4>
         </div>
       <div class="four wide column">
          <h4><i class="write icon"></i>Created</h4>

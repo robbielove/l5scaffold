@@ -41,7 +41,7 @@
         <div class="ui sixteen wide column vertical segment">
             <a href="{{ route('{{prefix}}{{models}}.show', ${{model}}->slug) }}"><button class="ui mini blue button"><i class="unhide icon"></i>View</button></a>
             <a href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->slug) }}"><button class="ui mini teal button"><i class="edit icon"></i>Edit</button></a>
-            <form action="{{ route('{{models}}.destroy', ${{model}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
+            <form action="{{ route('{{prefix}}{{models}}.destroy', ${{model}}->slug) }}" method="POST" style="display: inline;" onsubmit="if(confirm('De-Activate? Are you sure?')) { return true } else {return false };">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="ui mini button"><i class="hide icon"></i>De-Activate</button>

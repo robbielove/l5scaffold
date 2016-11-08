@@ -84,6 +84,9 @@ php artisan migrate
 After migrating you should add the fields that you added to the schema, to the controller as they are not added during the scaffold process. Ensure you add them to the create and update methods and include in validation if needed. The default fields will work out-the-box.
 
 The stubs use the model name to add the icon also, in most cases this will not match up with a Semantic UI icon in which case you will need to choose one and then modify the scaffolds with the new icon name
+
+The icons next to the fields shown on the create, edit and show views are also using the field name so you will likely want to customise these too. the default 'Name' field uses the Object icon.
+
 [Semantic UI icons](http://semantic-ui.com/)
 
 Add your Routes to app/Http/routes.php
