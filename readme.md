@@ -121,7 +121,7 @@ if you are prefixing a top level object, make sure you place your prefixed route
 Route::bind('objects', function($value, $route) {
   return App\Object::whereSlug($value)->firstOrFail();
 });
-Route::resource('prefixes.objects', 'TaskController',['except' => ['index'],['create']]);
+Route::resource('prefixes.objects', 'ObjectController',['except' => ['index'],['create']]);
 ```
 
 ## Custom stub
