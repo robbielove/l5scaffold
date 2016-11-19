@@ -79,7 +79,7 @@ class {{Model}}Controller extends Controller
 		Session::flash('message_type', 'success');
 		Session::flash('message_icon', 'checkmark');
 		Session::flash('message_header', 'Success');
-		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Created.');
+		Session::flash('message', 'The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Created.');
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}
@@ -130,13 +130,13 @@ class {{Model}}Controller extends Controller
 					 'name' => 'required|max:255',
 					 'description' => 'required'
 			 ]);
-			 
+
 		${{model}}->save();
 
 		Session::flash('message_type', 'blue');
 		Session::flash('message_icon', 'checkmark');
 		Session::flash('message_header', 'Success');
-		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was Updated.');
+		Session::flash('message', 'The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Updated.');
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}
@@ -155,7 +155,7 @@ class {{Model}}Controller extends Controller
 		Session::flash('message_type', 'negative');
 		Session::flash('message_icon', 'hide');
 		Session::flash('message_header', 'Success');
-		Session::flash('message', 'The {{Model}} ' . ${{model}}->title . ' was De-Activated.');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->name . ' was De-Activated.');
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}

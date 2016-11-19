@@ -15,8 +15,9 @@
       <i class="{{ session('message_icon') }} icon"></i>
       <div class="content">
         <div class="header">{{ session('message_header') }}</div>
-        <p>{{ session('message') }}</p>
+        <p>{!! session('message') !!}</p>
       </div>
+      <i class="close icon"></i>
     </div>
     @endif
 @endsection
