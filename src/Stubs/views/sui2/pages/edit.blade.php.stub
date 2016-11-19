@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+{{Models}} / Edit / {{ ${{model}}->name }}
+@endsection
 @section('header')
     <div class="ui header">
         <h1><i class="big edit icon"></i> {{Models}} / Edit</h1>

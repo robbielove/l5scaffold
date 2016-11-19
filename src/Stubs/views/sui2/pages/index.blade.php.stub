@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+{{Models}}
+@endsection
 @section('header')
     <div class="ui header">
         <h1><i class="big {{model}} icon"></i>{{Models}}<div class="circular ui blue label">{{ ${{models}}->count() }}</div></h1>

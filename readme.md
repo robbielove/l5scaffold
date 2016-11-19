@@ -26,21 +26,37 @@ Open `config/app.php` and, to your **providers** array at the bottom, add:
 
 You're all set. Run `php artisan` from the console, and you'll see the new commands `make:scaffold`.
 
+If you would like a Semantic UI based layout; Rename the generated layout.blade.php to app.blade.php, create a folder called layouts in the resources/views folder, place the app.blade.php template in there. Modify this template to your own needs. all generated scaffolds use this template.
+
+If you want to use it for your entire app simply return the layouts.app view to index routes (app/Http/Controllers/HomeController.php):
+```
+public function index()
+    {
+        return view('layouts.app');
+    }
+```
+
 ## Examples
 (Don't include the default fields: id, name, description, slug, active_flag, author_id, timestamps)
 ```
-php artisan make:scaffold Object --ui=sui2 --schema="title:string:default('Object 1'), body:text"
+php artisan make:scaffold Object \
+  --ui="sui2" \
+	--schema="title:string:default('Object 1'), body:text" \
 ```
 Or with more options
 ```
 php artisan make:scaffold Object \
+  --ui="sui2" \
 	--schema="title:string:default('Object 1'), body:text" \
-	--ui="sui2" \
 	--prefix="settings"
 ```
 
+You can also use the old Bootstrap styles if you prefer
 ```
-php artisan make:scaffold --ui=sui2 --schema="title:string" Object
+php artisan make:scaffold Object \
+  --ui="bs3" \
+	--schema="title:string:default('Object 1'), body:text" \
+	--prefix="settings"
 ```
 
 These commands will generate:

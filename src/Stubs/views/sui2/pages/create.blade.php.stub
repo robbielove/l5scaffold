@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+{{Models}} / Create
+@endsection
 @section('header')
     <div class="ui header">
         <h1><i class="big plus circle icon"></i> {{Models}} / Create </h1>
