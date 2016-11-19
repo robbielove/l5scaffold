@@ -5,7 +5,7 @@
 @endsection
 @section('header')
     <div class="ui header">
-        <h1><i class="big edit icon"></i> {{Models}} / Edit</h1>
+        <h1><i class="big edit icon"></i> {{Models}} / Edit / {{ ${{model}}->name }}</h1>
     </div>
 @endsection
 
