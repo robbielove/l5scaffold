@@ -79,7 +79,7 @@ class {{Model}}Controller extends Controller
 		Session::flash('message_type', 'success');
 		Session::flash('message_icon', 'checkmark');
 		Session::flash('message_header', 'Success');
-		Session::flash('message', 'The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Created.');
+		Session::flash('message', "The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Created.");
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}
@@ -136,7 +136,7 @@ class {{Model}}Controller extends Controller
 		Session::flash('message_type', 'blue');
 		Session::flash('message_icon', 'checkmark');
 		Session::flash('message_header', 'Success');
-		Session::flash('message', 'The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Updated.');
+		Session::flash('message', "The {{Model}} \"<a href='{{prefix}}/{{models}}/${{model}}->slug'>" . ${{model}}->name . "</a>\" was Updated.");
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}
