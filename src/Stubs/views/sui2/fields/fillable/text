@@ -1,7 +1,7 @@
 <div class="four wide column">
    <h4><i class="{{field.name}} icon"></i>{{field.Name}}</h4>
 </div>
-<div class="twelve wide column ">
+<div class="twelve wide column @if($errors->has('{{field.name}}')) error @endif field">
   <div class="ui fluid corner labeled input">
     <textarea class="ui input" id="{{field.name}}-field" rows="5" name="{{field.name}}" placeholder="{{field.Name}}">{{ old('{{field.name}}', ${{model}}->{{field.name}} ) }}</textarea>
     <div class="ui corner label">

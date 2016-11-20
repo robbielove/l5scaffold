@@ -15,7 +15,7 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="ui two column very padded stackable grid">
       <div class="four wide column">
-         <h4><i class="{{model}} icon"></i>Name</h4>
+         <h4><i class="{{model}} icon"></i>{{Model}} Name</h4>
       </div>
       <div class="twelve wide column @if($errors->has('name')) error @endif">
         <div class="ui fluid corner labeled input">
