@@ -151,7 +151,7 @@
 <div class="four wide column">
   <h4><i class="external icon"></i>URL</h4>
 </div>
-<div class="twelve wide column @if($errors->has('url')) has-error @endif">
+<div class="twelve wide column @if($errors->has('url')) error @endif">
   <div class="ui fluid corner labeled input">
     <input type="text" id="url-field" name="url" class="ui input" value="{{ ${{classSingle}}->url }}" placeholder="https://"/>
     <div class="ui corner label">
@@ -165,7 +165,7 @@
 <div class="four wide column">
    <h4><i class="folder icon"></i>Type</h4>
 </div>
-<div class="twelve wide column @if($errors->has('type')) has-error @endif">
+<div class="twelve wide column @if($errors->has('type')) error @endif">
   <select id="type-field" name="type" class="ui fluid search selection dropdown"/>
     @foreach ($types as $type)
       @if($type->id == ${{classSingle}}->type)
@@ -183,7 +183,7 @@
 <div class="four wide column">
    <h4><i class="marker icon"></i>Status</h4>
 </div>
-<div class="twelve wide column @if($errors->has('status')) has-error @endif">
+<div class="twelve wide column @if($errors->has('status')) error @endif">
   <select id="status-field" name="status" class="ui fluid search selection dropdown"/>
       @foreach ($statuses as $status)
         @if($status->id == ${{classSingle}}->status)
@@ -201,7 +201,7 @@
   <div class="four wide column">
      <h4><i class="folder outline icon"></i>Product Group</h4>
   </div>
-  <div class="twelve wide column @if($errors->has('product_group')) has-error @endif">
+  <div class="twelve wide column @if($errors->has('product_group')) error @endif">
     <select id="product_group-field" name="product_group" class="ui fluid search selection dropdown"/>
         @foreach ($product_groups as $product_group)
           @if($product_group->id == ${{classSingle}}->product_group)
@@ -235,7 +235,7 @@
 <div class="four wide column">
    <h4><i class="play icon"></i>Start</h4>
 </div>
-<div class="twelve wide column @if($errors->has('start')) has-error @endif">
+<div class="twelve wide column @if($errors->has('start')) error @endif">
   <div class="ui fluid corner labeled input">
     <input type="text" id="start-field" name="start" class="ui input" value="{{ ${{classSingle}}->start }}" placeholder="2016-05-01 00:00:00" readonly="true"/>
     <script type="text/javascript">
@@ -265,7 +265,7 @@
 <div class="four wide column">
    <h4><i class="stop icon"></i>Stop</h4>
 </div>
-<div class="twelve wide column @if($errors->has('stop')) has-error @endif">
+<div class="twelve wide column @if($errors->has('stop')) error @endif">
   <div class="ui fluid corner labeled input">
     <input type="text" id="stop-field" name="stop" class="ui input" value="{{ ${{classSingle}}->stop }}" placeholder="2016-05-01 00:00:00" readonly="true"/>
     <script type="text/javascript">
@@ -294,7 +294,7 @@
 <div class="four wide column">
    <h4><i class="git square icon"></i>Repository</h4>
 </div>
-<div class="twelve wide column @if($errors->has('repository')) has-error @endif">
+<div class="twelve wide column @if($errors->has('repository')) error @endif">
   <div class="ui fluid corner labeled input">
     <textarea class="form-control" id="repository-field" rows="2" name="repository" placeholder="{{classSingle}}.git (must exist on dev web1 /var/www/clients/client0/web2/web/repo/)">{{ ${{classSingle}}->repository }}</textarea>
     <div class="ui corner label">
