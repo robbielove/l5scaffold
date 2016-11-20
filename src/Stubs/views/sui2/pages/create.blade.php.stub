@@ -17,7 +17,7 @@
       <div class="four wide column">
          <h4><i class="{{model}} icon"></i>{{Model}} Name</h4>
       </div>
-      <div class="twelve wide column @if($errors->has('name')) error @endif">
+      <div class="twelve wide column @if($errors->has('name')) error @endif field">
         <div class="ui fluid corner labeled input">
           <input type="text" id="name-field" name="name" class="ui input" value="{{ old("name") }}" placeholder="{{Model}} Name"/>
           <div class="ui corner label">
@@ -31,7 +31,7 @@
       <div class="four wide column">
          <h4><i class="left align icon"></i>Description</h4>
       </div>
-      <div class="twelve wide column @if($errors->has('description')) error @endif">
+      <div class="twelve wide column @if($errors->has('description')) error @endif field">
         <div class="ui fluid corner labeled input">
           <textarea class="ui input" id="description-field" rows="5" name="description" placeholder="Description">{{ old("description") }}</textarea>
           <div class="ui corner label">
@@ -44,7 +44,8 @@
       </div>
       {{form_fields_empty}}
     </div>
-    <div class="ui divider"></div>
+</div>
+<div class="ui padded vertical stripe segment">
     <div class="ui two column stackable grid">
       <div class="column">
         <button type="submit" class="ui fluid button positive"><i class="circle plus icon"></i> Create</button>
