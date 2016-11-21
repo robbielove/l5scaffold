@@ -27,7 +27,7 @@
           <h4><i class="tag icon"></i>ID</h4>
         </div>
         <div class="twelve wide column">
-          <h5><div class="ui mini tag label">{{${{model}}->id}}</div></h5>
+          <h5><div class="ui tag label">{{${{model}}->id}}</div></h5>
         </div>
         <div class="four wide column">
           <h4><i class="linkify icon"></i>Slug</h4>
