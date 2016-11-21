@@ -63,9 +63,9 @@ class {{Model}}Controller extends Controller
 	{
 		${{model}} = new {{Model}}();
 
-		${{model}}->name = $request->input("name");
+		${{model}}->name = ucfirst($request->input("name"));
 		${{model}}->slug = str_slug($request->input("name"), "-");
-		${{model}}->description = $request->input("description");
+		${{model}}->description = ucfirst($request->input("description"));
 		${{model}}->active_flag = 1;
 		${{model}}->author_id = $request->user()->id;
 
@@ -120,9 +120,9 @@ class {{Model}}Controller extends Controller
 	public function update(Request $request, {{Model}} ${{model}}, User $user)
 	{
 
-		${{model}}->name = $request->input("name");
+		${{model}}->name = ucfirst($request->input("name"));
     ${{model}}->slug = str_slug($request->input("name"), "-");
-		${{model}}->description = $request->input("description");
+		${{model}}->description = ucfirst($request->input("description"));
 		${{model}}->active_flag = 1;//change to reflect current status or changed status
 		${{model}}->author_id = $request->user()->id;
 
