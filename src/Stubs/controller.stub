@@ -70,7 +70,7 @@ class {{Model}}Controller extends Controller
 		${{model}}->author_id = $request->user()->id;
 
 		$this->validate($request, [
-					 'name' => 'required|max:255',
+					 'name' => 'required|max:255|unique:{{model}}',
 					 'description' => 'required'
 			 ]);
 
@@ -127,7 +127,7 @@ class {{Model}}Controller extends Controller
 		${{model}}->author_id = $request->user()->id;
 
 		$this->validate($request, [
-					 'name' => 'required|max:255',
+					 'name' => 'required|max:255|unique:{{model}},name,' . ${{model}}->id,
 					 'description' => 'required'
 			 ]);
 
