@@ -159,4 +159,23 @@ class {{Model}}Controller extends Controller
 
 		return redirect()->route('{{prefix}}{{models}}.index');
 	}
+
+	/**
+	 * Re-Activate the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function reactivate({{Model}} ${{model}})
+	{
+		${{model}}->active_flag = 1;
+		${{model}}->save();
+
+		Session::flash('message_type', 'success');
+		Session::flash('message_icon', 'checkmark');
+		Session::flash('message_header', 'Success');
+		Session::flash('message', 'The {{Model}} ' . ${{model}}->name . ' was Re-Activated.');
+
+		return redirect()->route('{{prefix}}{{models}}.index');
+	}
 }
