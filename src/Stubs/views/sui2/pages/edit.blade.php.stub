@@ -57,7 +57,7 @@
       {{form_fields_fillable}}
     </div>
 </div>
-<div class="ui padded vertical stripe segment">
+<div class="ui padded vertical clearing segment">
     <div class="ui three column stackable grid">
       <div class="column">
         <button type="submit" class="ui fluid positive button"><i class="save icon"></i> Save</button>

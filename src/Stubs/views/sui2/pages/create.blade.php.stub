@@ -45,7 +45,7 @@
       {{form_fields_empty}}
     </div>
 </div>
-<div class="ui padded vertical stripe segment">
+<div class="ui padded vertical clearing segment">
     <div class="ui two column stackable grid">
       <div class="column">
         <button type="submit" class="ui fluid button positive"><i class="circle plus icon"></i> Create</button>

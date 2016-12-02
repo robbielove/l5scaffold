@@ -19,10 +19,10 @@
 </head>
 <body id="example" class="index pushable" ontouchstart>
   <div id="pusher" class="ui pusher">
-    <div id="header" class="ui padded vertical stripe segment">
+    <div id="header" class="ui padded vertical clearing segment">
     @yield('header')
     </div>
-    <div id="content" class="ui padded vertical stripe segment">
+    <div id="content" class="ui padded vertical clearing segment">
     @yield('content')
     </div>
   </div>

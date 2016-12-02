@@ -54,7 +54,7 @@
         @endforeach
     </div>
   </div>
-  <div class="ui padded center aligned vertical stripe segment">
+  <div class="ui padded center aligned vertical clearing segment">
   {!! (new Landish\Pagination\SemanticUI(${{models}}))->render() !!}
 @else
   <div class="ui icon error message"><i class="remove icon"></i>

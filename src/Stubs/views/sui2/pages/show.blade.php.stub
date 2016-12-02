@@ -62,7 +62,7 @@
           {{form_fields_show}}
   </div>
 </div>
-<div class="ui padded vertical stripe segment">
+<div class="ui padded vertical clearing segment">
   <div class="ui three column stackable grid">
       <div class="column">
         <a class="ui fluid teal button" href="{{ route('{{prefix}}{{models}}.edit', ${{model}}->slug) }}"><i class="edit icon"></i> Edit</a>
