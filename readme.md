@@ -38,6 +38,7 @@ public function index()
 
 ## Examples
 (Don't include the default fields: id, name, description, slug, active_flag, author_id, timestamps)
+always use the plural version of your prefix
 ```
 php artisan make:scaffold Object \
   --ui="sui2" \
