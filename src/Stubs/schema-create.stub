@@ -1,6 +1,6 @@
 Schema::create('{{models}}', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default('Un-Named {{Class}}');
+            $table->string('name')->default('Un-Named {{Model}}');
             $table->string('slug');
             $table->text('description');
             {{schema_up}}

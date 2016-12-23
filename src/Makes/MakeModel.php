@@ -42,7 +42,7 @@ class MakeModel
         $name = $this->scaffoldCommandObj->getObjName('Name');
         $path = $this->getPath($name, 'model');
 
-        if ($this->files->exists($path)) 
+        if ($this->files->exists($path))
         {
             return $this->scaffoldCommandObj->comment("x $name");
         }

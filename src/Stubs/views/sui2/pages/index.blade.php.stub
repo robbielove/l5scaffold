@@ -7,7 +7,7 @@
     <div class="ui header">
         <h1><i class="big {{model}} icon"></i>{{Models}}<div class="circular ui blue label">{{ $active->count() }}</div></h1>
         <div class="ui buttons">
-          <a class="ui positive mini button pull-right" href="{{ route('{{prefix}}{{models}}.create') }}"><i class="add circle icon"></i>Create</a>
+          <a class="ui positive mini button pull-right" href="{{ route('{{models}}.create') }}"><i class="add circle icon"></i>Create</a>
         </div>
     </div>
     @if(session('message_type'))
