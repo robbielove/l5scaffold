@@ -37,14 +37,17 @@ public function index()
 ```
 
 ## Examples
+Ensure you include at least 1 field for the schema to generate or you will get an 'array to string' conversion error.
+
 (Don't include the default fields: id, name, description, slug, active_flag, author_id, timestamps)
-always use the plural version of your prefix
+
 ```
 php artisan make:scaffold Object \
   --ui="sui2" \
 	--schema="title:string:default('Object 1'), body:text" \
 ```
-Or with more options
+
+Always use the plural version of your prefix:
 ```
 php artisan make:scaffold Object \
   --ui="sui2" \
@@ -61,11 +64,10 @@ php artisan make:scaffold Object \
 ```
 
 These commands will generate:
-
 ```
 app/Object.php
 app/Http/Controllers/ObjectController.php
-database/migrations/2015_04_23_234422_create_objects_table.php
+database/migrations/201x_xx_xx_xxxxxx_create_objects_table.php
 database/seeds/ObjectTableSeeder.php
 resources/views/layout.blade.php
 resources/views/objects/index.blade.php
@@ -77,7 +79,7 @@ The generated migration will include by default:
 
 ```
 $table->increments('id');
-$table->string('name')->default('Un-Named {{Class}}');
+$table->string('name')->default('Un-Named Object');
 $table->string('slug');
 $table->text('description');
 
@@ -100,11 +102,13 @@ php artisan migrate
 
 After migrating you should add the fields that you added to the schema, to the controller as they are not added during the scaffold process. Ensure you add them to the create and update methods and include in validation if needed. The default fields will work out-the-box.
 
+If you have created the scaffold with a prefix - you will need to tweak some of the views as they will not quite match up to the values the controller is expecting.
+
 The stubs use the model name to add the icon also, in most cases this will not match up with a Semantic UI icon in which case you will need to choose one and then modify the scaffolds with the new icon name
 
 The icons next to the fields shown on the create, edit and show views are also using the field name so you will likely want to customise these too. the default 'Name' field uses the Object icon.
 
-[Semantic UI icons](http://semantic-ui.com/)
+[Semantic UI icons](http://semantic-ui.com/elements/icon.html)
 
 Add your Routes to app/Http/routes.php
 
