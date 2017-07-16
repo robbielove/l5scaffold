@@ -1,6 +1,6 @@
-# Laravel 5.2 Scaffold Generator
+# Laravel 5.4 Scaffold Generator
 
-Hi, this is a forked scaffold generator for Laravel 5.2. using Semantic UI styles instead of Bootstrap
+Hi, this is a forked scaffold generator for Laravel 5.4. using Semantic UI styles instead of Bootstrap
 
 ## Usage
 
